@@ -1,0 +1,7 @@
+﻿{
+  "name": "MagicTiles.Services.Implementations.DI",
+  "references": [
+    "VContainer",
+    "MagicTiles.Services"
+  ]
+}

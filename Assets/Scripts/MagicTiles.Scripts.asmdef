@@ -1,0 +1,12 @@
+﻿{
+  "name": "MagicTiles.Scripts",
+  "references": [
+    "VContainer",
+    "MagicTiles.Services",
+    "MagicTiles.Services.Implementations.DI",
+    "UniTask",
+    "BaseDuet.Core",
+    "GoogleSheet.Core",
+    "CSSynth.Core"
+  ]
+}

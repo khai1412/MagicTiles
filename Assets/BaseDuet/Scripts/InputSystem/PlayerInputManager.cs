@@ -9,43 +9,37 @@ namespace BasePlayerInput.InputSystem
     using BaseDuet.Scripts.InputSystem.Modules.DragMultipleModule;
     using BasePlayerInput.InputSystem.Interfaces.IDragDrop;
     using BasePlayerInput.InputSystem.Modules;
-    using GameFoundation.DI;
-    using GameFoundation.Scripts.Utilities;
-    using GameFoundation.Signals;
+    using Services.Abstractions.AudioManager;
     using UnityEngine;
-    
+    using VContainer.Unity;
 
     public class PlayerInputManager : ITickable
     {
         #region Inject
 
-        private readonly SignalBus             signalBus;
-        private readonly IAudioService         audioService;
+        private readonly IAudioManager         audioService;
         private readonly GlobalDataController  globalDataController;
         private readonly StaticValueBlueprint  staticValueBlueprint;
         private          List<BaseInputModule> listMultiDragModule = new();
 
-
-        public PlayerInputManager(SignalBus signalBus, IAudioService audioService, GlobalDataController globalDataController, StaticValueBlueprint staticValueBlueprint)
+        public PlayerInputManager(IAudioManager audioService, GlobalDataController globalDataController, StaticValueBlueprint staticValueBlueprint)
         {
-            this.signalBus            = signalBus;
             this.audioService         = audioService;
             this.globalDataController = globalDataController;
             this.staticValueBlueprint = staticValueBlueprint;
-            listMultiDragModule.Add(new DragMultipleModule(this.signalBus, this.audioService, this));
-            listMultiDragModule.Add(new DragMultipleModule(this.signalBus, this.audioService, this));
+            listMultiDragModule.Add(new DragMultipleModule(this.audioService, this));
+            listMultiDragModule.Add(new DragMultipleModule(this.audioService, this));
         }
 
         #endregion
 
-        public           bool            IsActive { get; private set; }
-        public           Camera          Camera   { get; private set; } = Camera.main;
-        public           bool            canPlayClickSound = true;
-        private          bool            isTouchDown;
-        private          int             lastTouchId;
-        private const    int             RaycastHitBufferAmount = 10;
-        private readonly RaycastHit2D[]  raycastHitBuffer       = new RaycastHit2D[RaycastHitBufferAmount];
-
+        public           bool           IsActive { get; private set; }
+        public           Camera         Camera   { get; private set; } = Camera.main;
+        public           bool           canPlayClickSound = true;
+        private          bool           isTouchDown;
+        private          int            lastTouchId;
+        private const    int            RaycastHitBufferAmount = 10;
+        private readonly RaycastHit2D[] raycastHitBuffer       = new RaycastHit2D[RaycastHitBufferAmount];
 
         public void Tick()
         {
@@ -59,10 +53,10 @@ namespace BasePlayerInput.InputSystem
             this.TryGetDragTarget();
             this.Execute();
         }
+
         private void ResetTouch()
         {
             this.lastTouchId = -1;
-            
         }
 
         private void TryGetDragTarget()
@@ -125,13 +119,12 @@ namespace BasePlayerInput.InputSystem
 
         protected virtual void Execute()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             if (!this.globalDataController.IsPlaying && Input.touchCount == 1) this.globalDataController.PlayGame();
 
-#else
-
+            #else
                         if (!this.globalDataController.IsPlaying && Input.touchCount >= 2) this.globalDataController.PlayGame();
-#endif
+            #endif
 
             for (int i = 0; i < this.listMultiDragModule.Count; i++)
             {
@@ -140,6 +133,7 @@ namespace BasePlayerInput.InputSystem
                 module.Execute(this.Camera, touch);
             }
         }
+
         public void ResetModuleList()
         {
             foreach (var module in this.listMultiDragModule)
@@ -151,6 +145,9 @@ namespace BasePlayerInput.InputSystem
 
         public void ChangeCamera(Camera camera) => this.Camera = camera;
 
-        public async void SetActive(bool status) { this.IsActive = status; }
+        public async void SetActive(bool status)
+        {
+            this.IsActive = status;
+        }
     }
 }

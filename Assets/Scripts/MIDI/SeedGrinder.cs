@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
-namespace TheOneStudio.HyperCasual.MIDI
+namespace MagicTiles.Scripts.MIDI
 {
     using Cysharp.Threading.Tasks;
-    using TheOneStudio.HyperCasual.Blueprints;
+    using MagicTiles.Scripts.Blueprints;
     using UnityEngine;
 
 

@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Models.Static
+namespace MagicTiles.Scripts.Models.Static
 {
     using System.Collections.Generic;
 

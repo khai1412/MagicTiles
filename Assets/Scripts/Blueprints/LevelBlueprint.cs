@@ -1,6 +1,13 @@
-namespace TheOneStudio.HyperCasual.Blueprints
+namespace MagicTiles.Scripts.Blueprints
 {
     using System.Collections.Generic;
+    using GameCore.Extensions;
+    using UnityEngine;
+
+    public class LevelBlueprint : ScriptableObject
+    {
+        public UnitySerializedDictionary<string, LevelRecord> LevelRecords;
+    }
 
     public class LevelRecord
     {

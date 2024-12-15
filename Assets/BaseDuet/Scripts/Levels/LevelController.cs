@@ -13,32 +13,29 @@ namespace BaseDuet.Scripts.Levels
     using Cysharp.Threading.Tasks;
     using BasePlayerInput.InputSystem;
     using DG.Tweening;
-    using GameFoundation.DI;
-    using GameFoundation.Scripts.Utilities;
-    using GameFoundation.Scripts.Utilities.ObjectPool;
-    using GameFoundation.Signals;
+    using GameCore.Services.Implementations.ObjectPool;
+    using Services.Abstractions.AudioManager;
     using UnityEngine;
+    using GameCore.Extensions;
+    using VContainer;
 
     [RequireComponent(typeof(LevelView))]
     public class LevelController : MonoBehaviour, IStatedComponent, IController<LevelModel, LevelView>
     {
-        [Inject] private ObjectPoolManager objectPoolManager;
-        [Inject] private IAudioService     audioService;
-
-        [Inject] private IDependencyContainer    diContainer;
-        [Inject] private SignalBus               signalBus;
-        private          GlobalDataController    globalDataController => diContainer.Resolve<GlobalDataController>();
-        private          PlayerInputManager      playerInputManager   => diContainer.Resolve<PlayerInputManager>();
-        public           LevelModel              Model                { get; private set; }
-        public           LevelView               View                 { get; private set; }
-        private          float                   songDuration;
-        private          float                   cacheDelay;
-        private          float                   lastTimeChangeMood;
-        private          float                   cacheLastSpawn;
-        private          float                   reviveDelay;
-        private          int                     moodIndex;
-        private          bool                    isFirstHitNote;
-        private          CancellationTokenSource cancellationTokenSource;
+        private ObjectPoolManager       objectPoolManager;
+        private IAudioManager           audioService;
+        private GlobalDataController    globalDataController;
+        private PlayerInputManager      playerInputManager;
+        public  LevelModel              Model { get; private set; }
+        public  LevelView               View  { get; private set; }
+        private float                   songDuration;
+        private float                   cacheDelay;
+        private float                   lastTimeChangeMood;
+        private float                   cacheLastSpawn;
+        private float                   reviveDelay;
+        private int                     moodIndex;
+        private bool                    isFirstHitNote;
+        private CancellationTokenSource cancellationTokenSource;
 
         public void BindData(LevelModel model, LevelView view)
         {
@@ -49,12 +46,16 @@ namespace BaseDuet.Scripts.Levels
 
         private List<NoteController>         noteControllers         = new();
         private List<CharacterDogController> characterDogControllers = new();
+
         private void Awake()
         {
-            this.signalBus.Subscribe<GameReviveSignal>(this.ReviveState);
-            this.signalBus.Subscribe<NoteHitSignal>(this.OnNoteHit);
-            this.signalBus.Subscribe<ClaimTutRewardSignal>(this.ClaimTutReward);
+            var container = this.GetCurrentContainer();
+            this.objectPoolManager    = container.Resolve<ObjectPoolManager>();
+            this.audioService         = container.Resolve<IAudioManager>();
+            this.globalDataController = container.Resolve<GlobalDataController>();
+            this.playerInputManager   = container.Resolve<PlayerInputManager>();
         }
+
         private void ClaimTutReward()
         {
             for (int i = 0; i < this.characterDogControllers.Count; i++)
@@ -62,27 +63,29 @@ namespace BaseDuet.Scripts.Levels
                 this.characterDogControllers[i].BindSkin(i + 1);
             }
         }
+
         public void HomeState()
         {
             // this.SpawnDog(this.Model.CharacterDogModels);
         }
+
         private async void ShowObstacleTutorial()
         {
             this.View.ObstacleTimeline.gameObject.SetActive(true);
             this.View.ObstacleTimeline.Play();
             this.globalDataController.IsObstacleTutorial = false;
             await UniTask.WaitForSeconds(3)
-                         .ContinueWith(() =>
-                         {
-                             this.globalDataController.PauseTime();
-                             foreach (var noteController in this.noteControllers)
-                             {
-                                 noteController.PauseState();
-                             }
+                .ContinueWith(() =>
+                {
+                    this.globalDataController.PauseTime();
+                    foreach (var noteController in this.noteControllers)
+                    {
+                        noteController.PauseState();
+                    }
 
-                             this.View.EvadeObstacleTutTimeline.gameObject.SetActive(true);
-                             this.View.EvadeObstacleTutTimeline.Play();
-                         });
+                    this.View.EvadeObstacleTutTimeline.gameObject.SetActive(true);
+                    this.View.EvadeObstacleTutTimeline.Play();
+                });
             await UniTask.WaitForSeconds(1, ignoreTimeScale: true);
             await UniTask.WaitUntil(() => this.characterDogControllers.Any(x => x.transform.position.x > 0 && x.transform.position.x < .7f)).ContinueWith(this.FinishObstacleTut);
 
@@ -132,6 +135,7 @@ namespace BaseDuet.Scripts.Levels
             // this.SpawnNote();
             this.SpawnDog(this.Model.CharacterDogModels);
         }
+
         public async UniTask PrepareMusic(AudioClip audioClip)
         {
             this.audioService.PlayPlayList(audioClip, volumeScale: 1f);
@@ -140,12 +144,12 @@ namespace BaseDuet.Scripts.Levels
             this.audioService.SetPlayListLoop(false);
             this.audioService.PausePlayList();
         }
+
         private void SpawnNote()
         {
             foreach (var noteModel in this.Model.NoteModels)
             {
                 var noteController = this.objectPoolManager.Spawn(this.View.NoteControllerPrefab).GetComponent<NoteController>();
-                this.diContainer.Inject(noteController);
                 noteController.transform.SetParent(this.View.NoteContainer, false);
                 noteController.BindData(noteModel, null);
                 noteController.PrepareState();
@@ -207,7 +211,6 @@ namespace BaseDuet.Scripts.Levels
             Debug.Log($"Spawn note");
             if (!this.globalDataController.IsPlaying) return;
             var noteController = this.objectPoolManager.Spawn(this.View.NoteControllerPrefab).GetComponent<NoteController>();
-            this.diContainer.Inject(noteController);
             noteController.transform.SetParent(this.View.NoteContainer, false);
             noteController.BindData(noteModel, null);
             noteController.PrepareState();
@@ -222,7 +225,6 @@ namespace BaseDuet.Scripts.Levels
             for (int i = 0; i < characterModels.Length; i++)
             {
                 var characterDogController = this.objectPoolManager.Spawn(this.View.CharacterDogControllerPrefab).GetComponent<CharacterDogController>();
-                this.diContainer.Inject(characterDogController);
                 this.View.ListTouchView[i].SetTarget(characterDogController);
                 characterDogController.transform.SetParent(this.View.CharacterContainer, false);
                 characterDogController.BindData(characterModels[i], null);
@@ -240,7 +242,6 @@ namespace BaseDuet.Scripts.Levels
             this.globalDataController.UpdateTimeScale(1);
             if (this.globalDataController.IsGameplayTutorial) this.DoTutorialTimeline().Forget();
             this.SetActiveVFX(true);
-            this.signalBus.Fire(new DuetLevelChangeStateSignal(EDuetLevelState.StartState));
             this.View.Tutorial.SetActive(false);
             this.cacheDelay = this.globalDataController.MovingDurationToCharacter - this.globalDataController.FeelingLatency - this.globalDataController.Latency - (6 - this.globalDataController.NoteSpeed) * .05f;
             Debug.Log($"Cache lay: {this.globalDataController.MovingDurationToCharacter}");
@@ -276,7 +277,6 @@ namespace BaseDuet.Scripts.Levels
         public async void EndState()
         {
             this.CancelCancellationToken();
-            this.signalBus.Fire(new DuetLevelChangeStateSignal(EDuetLevelState.EndState));
             this.SetActiveVFX(false);
             this.audioService.StopAllSound();
 
@@ -319,7 +319,6 @@ namespace BaseDuet.Scripts.Levels
         public void RestartState()
         {
             this.CancelCancellationToken();
-            this.signalBus.Fire(new DuetLevelChangeStateSignal(EDuetLevelState.RestartState));
             this.audioService.PausePlayList();
             this.audioService.SetPlayListTime(0);
             Debug.Log($"Total note count: {this.noteControllers.Count}");
@@ -333,7 +332,11 @@ namespace BaseDuet.Scripts.Levels
 
             this.PrepareState();
         }
-        public void UpdateVolume(float value) { this.noteControllers.ForEach(x => x.UpdateVolume(value)); }
+
+        public void UpdateVolume(float value)
+        {
+            this.noteControllers.ForEach(x => x.UpdateVolume(value));
+        }
 
         private void LoseHealth()
         {
@@ -342,7 +345,12 @@ namespace BaseDuet.Scripts.Levels
 
             this.TempLoseGame();
         }
-        private void SetActiveVFX(bool status) { this.View.ListGameplayVFX.ForEach(x => x.gameObject.SetActive(status)); }
+
+        private void SetActiveVFX(bool status)
+        {
+            this.View.ListGameplayVFX.ForEach(x => x.gameObject.SetActive(status));
+        }
+
         private void ChangeMood(float timeChange)
         {
             if (Mathf.Approximately(this.lastTimeChangeMood, timeChange)) return;
@@ -350,6 +358,7 @@ namespace BaseDuet.Scripts.Levels
             this.View.GetComponent<MoodChangeComponent>().ChangeMood(this.Model.MoodThemes[this.moodIndex++ % this.Model.MoodThemes.Count]);
             if (timeChange != 0) this.globalDataController.NextSegment();
         }
+
         private void OnNoteHit(NoteHitSignal note)
         {
             if (note.NoteModel.IsHit)
@@ -366,7 +375,8 @@ namespace BaseDuet.Scripts.Levels
                     this.LoseHealth();
 
                     #endif
-                } else
+                }
+                else
                 {
                     if (note.NoteModel.IsStrong)
                     {
@@ -387,11 +397,13 @@ namespace BaseDuet.Scripts.Levels
                 {
                     this.WinGame();
                 }
-            } else
+            }
+            else
             {
                 if (!note.NoteModel.IsObstacle) this.LoseHealth();
             }
         }
+
         private void TempLoseGame()
         {
             this.audioService.StopAllSound();
@@ -412,6 +424,7 @@ namespace BaseDuet.Scripts.Levels
             await UniTask.WaitUntil(() => this.characterDogControllers.TrueForAll(x => !x.gameObject.activeSelf));
             this.characterDogControllers.Clear();
         }
+
         private async void WinGame()
         {
             try
@@ -427,17 +440,22 @@ namespace BaseDuet.Scripts.Levels
 
             this.globalDataController.IsPlaying = false;
             this.globalDataController.WinGame();
-            this.signalBus.Fire(new GameOverSignal(this.globalDataController.IsWin));
         }
+
         private async UniTask DoWinGameAnimation()
         {
             this.View.DuongChanTroiParticle.alpha = 0;
             this.View.DuongChanTroiParticle.gameObject.SetActive(true);
-            await DOTween.To(() => this.View.DuongChanTroiParticle.alpha, x => this.View.DuongChanTroiParticle.alpha = x, 1f, 1f).ToUniTask(cancellationToken: this.cancellationTokenSource.Token);
+            DOTween.To(
+                () => this.View.DuongChanTroiParticle.alpha,
+                x => this.View.DuongChanTroiParticle.alpha = x,
+                1f,
+                1f); // TODO : Add await later
             this.DoDogWinAnimation();
 
             await UniTask.Delay(1000, cancellationToken: this.cancellationTokenSource.Token);
         }
+
         private void DoDogWinAnimation()
         {
             foreach (var characterDogController in this.characterDogControllers)
@@ -445,14 +463,14 @@ namespace BaseDuet.Scripts.Levels
                 characterDogController.DoWinAnimation();
             }
         }
+
         private void LoseGame()
         {
             this.CancelCancellationToken();
             this.globalDataController.IsPlaying = false;
             this.globalDataController.LoseGame();
-            this.signalBus.Fire(new GameOverSignal(this.globalDataController.IsWin));
-            this.signalBus.Fire(new DuetLevelChangeStateSignal(EDuetLevelState.LoseState));
         }
+
         private async UniTask DoTutorialTimeline()
         {
             this.View.TutorialTimeline.gameObject.SetActive(true);

@@ -7,7 +7,7 @@ namespace BaseDuet.Scripts.Installers
     using VContainer;
     using VContainer.Unity;
 
-    public class BaseDuetInstaller 
+    public class BaseDuetInstaller
     {
         public static void Configure(IContainerBuilder builder)
         {

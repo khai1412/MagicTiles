@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Models
+namespace MagicTiles.Scripts.Models
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace TheOneStudio.HyperCasual.Models
         public Dictionary<string, int>              AccumulatedDictionary = new();
         public void                                 Init() { }
 
-        // public Type ControllerType => typeof(UserLocalDataController);
+        public Type ControllerType => typeof(UserLocalDataController);
     }
 
     public class DogDuetLevelData

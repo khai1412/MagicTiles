@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using CSSynth.Midi;
 using UnityEngine;
 
-namespace TheOneStudio.HyperCasual.MIDI
+namespace MagicTiles.Scripts.MIDI
 {
     using System.Linq;
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Notes;
     using Cysharp.Threading.Tasks;
+    using MagicTiles.Scripts.Models;
+    using MagicTiles.Scripts.Models.Static;
     using Services.Abstractions.AssetsManager;
-    using TheOneStudio.HyperCasual.Models;
-    using TheOneStudio.HyperCasual.Models.Static;
     using Random = UnityEngine.Random;
 
     public class MidiGenerator

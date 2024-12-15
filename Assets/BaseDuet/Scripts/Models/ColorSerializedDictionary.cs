@@ -1,12 +1,12 @@
 namespace BaseDuet.Scripts.Models
 {
     using System;
-    using GameFoundation.Scripts.Utilities.Extension;
+    using GameCore.Extensions;
     using UnityEngine;
 
     [Serializable]
     public class ColorSerializedDictionary : UnitySerializedDictionary<string, Color>
     {
-        
+
     }
 }

@@ -1,10 +1,9 @@
-namespace TheOneStudio.HyperCasual.StateMachines.Game.States
+namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.SessionData;
-    using GameFoundation.Scripts.UIModule.ScreenFlow.Managers;
-    using TheOneStudio.HyperCasual.Scenes.Popup;
-    using TheOneStudio.HyperCasual.StateMachines.Game.Interfaces;
-    using TheOneStudio.UITemplate.UITemplate.Others.StateMachine.Interface;
+    using MagicTiles.Scripts.StateMachines.Game.Interfaces;
+    using Services.Abstractions.ScreenManager;
+    using Services.Abstractions.StateMachine;
 
     public class GameOverState : IGameState
     {
@@ -24,8 +23,8 @@ namespace TheOneStudio.HyperCasual.StateMachines.Game.States
         public async void Enter()
         {
             this.screenManager.CloseAllScreen();
-            await this.screenManager.OpenScreen<GameOverScreenPresenter>();
-            
+            // await this.screenManager.OpenScreen<GameOverScreenPresenter>();
+
         }
         public void          Exit()       { }
         public IStateMachine StateMachine { get; set; }

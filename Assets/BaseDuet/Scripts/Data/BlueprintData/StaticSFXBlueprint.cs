@@ -1,10 +1,8 @@
 namespace BaseDuet.Scripts.Data.BlueprintData
 {
-    using System.Runtime.CompilerServices;
-    using BlueprintFlow.BlueprintReader;
+    using UnityEngine;
 
-    [BlueprintReader("StaticSFX", true)]
-    public class StaticSFXBlueprint : GenericBlueprintReaderByCol
+    public class StaticSFXBlueprint : ScriptableObject
     {
         public string BtnBack        { get; set; }
         public string MusicSplash    { get; set; }

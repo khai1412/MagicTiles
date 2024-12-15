@@ -1,24 +1,23 @@
 namespace BaseDuet.Scripts.Data.LocalData
 {
     using System.Collections.Generic;
-    using GameFoundation.Scripts.Interfaces;
-    using Sirenix.Serialization;
+    using GameCore.Services.Abstractions.LocalData;
 
     public class BaseDuetLocalData : ILocalData
     {
         public void Init() { }
 
-        [OdinSerialize] public Dictionary<string, BaseDuetLocalDataRecord> LevelToRecord      { get; set; } = new();
-        [OdinSerialize] public float                                       Sensitivity        { get; set; } = 2;
-        [OdinSerialize] public float                                       Latency            { get; set; } = 0;
-        [OdinSerialize] public float                                       Offlane            { get; set; } = 0.18f;
-        [OdinSerialize] public float                                       NoteMargin            { get; set; } = 1f;
-        [OdinSerialize] public bool                                        IsGameplayTutorial { get; set; } = false;
-        [OdinSerialize] public bool                                        IsCardTutorial     { get; set; } = false;
-        [OdinSerialize] public bool                                        IsSongTutorial     { get; set; } = false;
-        [OdinSerialize] public bool                                        IsShopTutorial     { get; set; } = false;
-        [OdinSerialize] public bool                                        IsObstacleTutorial { get; set; } = false;
-        [OdinSerialize] public bool                                        IsAlbumTutorial    { get; set; } = false;
+        public Dictionary<string, BaseDuetLocalDataRecord> LevelToRecord      { get; set; } = new();
+        public float                                       Sensitivity        { get; set; } = 2;
+        public float                                       Latency            { get; set; } = 0;
+        public float                                       Offlane            { get; set; } = 0.18f;
+        public float                                       NoteMargin         { get; set; } = 1f;
+        public bool                                        IsGameplayTutorial { get; set; } = false;
+        public bool                                        IsCardTutorial     { get; set; } = false;
+        public bool                                        IsSongTutorial     { get; set; } = false;
+        public bool                                        IsShopTutorial     { get; set; } = false;
+        public bool                                        IsObstacleTutorial { get; set; } = false;
+        public bool                                        IsAlbumTutorial    { get; set; } = false;
     }
 
     public class BaseDuetLocalDataRecord

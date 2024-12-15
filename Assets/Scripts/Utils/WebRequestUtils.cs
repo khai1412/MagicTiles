@@ -1,9 +1,9 @@
-namespace TheOneStudio.HyperCasual.Utils
+namespace MagicTiles.Scripts.Utils
 {
     using System;
     using System.Threading;
     using Cysharp.Threading.Tasks;
-    using TheOneStudio.HyperCasual.Extensions;
+    using GoogleSheet.Core;
     using UnityEngine;
     using UnityEngine.Networking;
 

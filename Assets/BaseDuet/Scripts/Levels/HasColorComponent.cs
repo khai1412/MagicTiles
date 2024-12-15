@@ -2,9 +2,10 @@ namespace BaseDuet.Scripts.Levels
 {
     using BaseDuet.Scripts.Extensions;
     using DG.Tweening;
-    using TheOneStudio.UITemplate.UITemplate.Extension;
     using UnityEngine;
+    using DOTween.Extension;
     using UnityEngine.UI;
+    using GameCore.Extensions;
 
     public class HasColorComponent : MonoBehaviour
     {

@@ -1,9 +1,8 @@
 namespace BaseDuet.Scripts.Data.BlueprintData
 {
-    using BlueprintFlow.BlueprintReader;
+    using UnityEngine;
 
-    [BlueprintReader("StaticValue", true)]
-    public class StaticValueBlueprint : GenericBlueprintReaderByCol
+    public class StaticValueBlueprint : ScriptableObject
     {
         public float  BaseNoteSpeed         { get; set; }
         public float  LowestNotePosition    { get; set; }

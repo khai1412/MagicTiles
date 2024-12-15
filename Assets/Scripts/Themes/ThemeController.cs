@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Themes
+namespace MagicTiles.Scripts.Themes
 {
     using UnityEngine;
 

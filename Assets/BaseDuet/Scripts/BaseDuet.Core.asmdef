@@ -1,3 +1,13 @@
 ﻿{
-  "name": "BaseDuet.Core"
+  "name": "BaseDuet.Core",
+  "references": [
+    "UniTask",
+    "VContainer",
+    "GameCore.Signals",
+    "MagicTiles.Services",
+    "GameCore.Extensions",
+    "DOTween.Extension",
+    "spine-unity",
+    "spine-csharp"
+  ]
 }

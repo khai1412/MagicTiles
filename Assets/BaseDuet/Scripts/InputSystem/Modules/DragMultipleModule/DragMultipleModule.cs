@@ -1,23 +1,26 @@
 namespace BaseDuet.Scripts.InputSystem.Modules.DragMultipleModule
 {
-    using System;
-    using BaseDuet.Scripts.Extensions;
     using BasePlayerInput.InputSystem;
     using BasePlayerInput.InputSystem.Modules;
-    using GameFoundation.Scripts.Utilities;
-    using GameFoundation.Signals;
+    using Services.Abstractions.AudioManager;
     using UnityEngine;
-    
 
     public class DragMultipleModule : BaseInputModule
     {
-        public DragMultipleModule(SignalBus signalBus, IAudioService audioService, PlayerInputManager playerInputManager) : base(signalBus, audioService, playerInputManager) { this.touchId = -1; }
+        public DragMultipleModule(IAudioManager audioService, PlayerInputManager playerInputManager) : base(audioService, playerInputManager)
+        {
+            this.touchId = -1;
+        }
+
         private float   distance;
         private Touch   cacheTouch;
         private Vector3 direction;
         private Vector3 previousPositionCache = Vector3.zero;
 
-        protected override void OnBegin(Vector2 touchPosition) { this.previousPositionCache = Vector3.zero; }
+        protected override void OnBegin(Vector2 touchPosition)
+        {
+            this.previousPositionCache = Vector3.zero;
+        }
 
         protected override void OnMove(Vector2 touchPosition)
         {
@@ -32,12 +35,12 @@ namespace BaseDuet.Scripts.InputSystem.Modules.DragMultipleModule
             this.previousPositionCache = touchPosition;
         }
 
-
         protected override void OnEnd(Vector2 touchPosition)
         {
             Debug.Log("Module end touch");
             // this.playerInputManager.OnTouchRelease(this);
         }
+
         protected override void OnReset()
         {
             this.previousPositionCache = Vector3.zero;

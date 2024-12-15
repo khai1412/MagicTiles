@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.StateMachines.Game.Interfaces
+namespace MagicTiles.Scripts.StateMachines.Game.Interfaces
 {
     using Services.Abstractions.StateMachine;
 

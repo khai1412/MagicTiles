@@ -1,5 +1,12 @@
-namespace TheOneStudio.HyperCasual.Blueprints
+namespace MagicTiles.Scripts.Blueprints
 {
+    using GameCore.Extensions;
+    using UnityEngine;
+
+    public class RemoteLevelBlueprint : ScriptableObject
+    {
+        public UnitySerializedDictionary<string, RemoteLevelRecord> remoteLevelRecords;
+    }
 
     public class RemoteLevelRecord
     {

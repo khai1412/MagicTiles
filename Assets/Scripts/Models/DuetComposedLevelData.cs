@@ -1,7 +1,7 @@
-namespace TheOneStudio.HyperCasual.Models
+namespace MagicTiles.Scripts.Models
 {
     using BaseDuet.Scripts.Data.LocalData;
-    using TheOneStudio.HyperCasual.Blueprints;
+    using MagicTiles.Scripts.Blueprints;
 
     public class DuetComposedLevelData
     {
@@ -11,9 +11,9 @@ namespace TheOneStudio.HyperCasual.Models
         public readonly BaseDuetLocalDataRecord BaseDuetLocalDataRecord;
 
         public DuetComposedLevelData(
-            DogDuetLevelData dogDuetLevelData, 
-            LevelRecord levelRecord, 
-            RemoteLevelRecord remoteLevelRecord, 
+            DogDuetLevelData dogDuetLevelData,
+            LevelRecord levelRecord,
+            RemoteLevelRecord remoteLevelRecord,
             BaseDuetLocalDataRecord baseDuetLocalDataRecord
             )
         {

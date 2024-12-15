@@ -1,12 +1,11 @@
 namespace BaseDuet.Scripts.Models
 {
     using System;
-    using GameFoundation.Scripts.Utilities.Extension;
-    using UnityEngine;
+    using GameCore.Extensions;
 
     [Serializable]
     public class StringSerializedDictionary : UnitySerializedDictionary<string, string>
     {
-        
+
     }
 }

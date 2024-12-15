@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Extensions
+namespace GoogleSheet.Core
 {
     using System.Text.RegularExpressions;
 

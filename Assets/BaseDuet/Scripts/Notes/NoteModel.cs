@@ -1,21 +1,20 @@
 namespace BaseDuet.Scripts.Notes
 {
     using System;
-    using Sirenix.Serialization;
     using UnityEngine;
 
     [Serializable]
     public class NoteModel
     {
-        [OdinSerialize] public int       Id                  { get; set; }
-        public                 Sprite    NoteSprite          { get; set; }
-        public                 AudioClip NoteAudioClip       { get; private set; }
-        public                 ELongNote ELongNote           { get; set; }
-        public                 float     Duration            { get; private set; }
-        public                 float     TimeAppear          { get; set; }
-        public                 float     DelayTimeToNextNote { get; private set; }
-        [OdinSerialize] public float     PositionX           { get; set; }
-        [OdinSerialize] public int       Velocity            { get; private set; }
+        public int       Id                  { get; set; }
+        public Sprite    NoteSprite          { get; set; }
+        public AudioClip NoteAudioClip       { get; private set; }
+        public ELongNote ELongNote           { get; set; }
+        public float     Duration            { get; private set; }
+        public float     TimeAppear          { get; set; }
+        public float     DelayTimeToNextNote { get; private set; }
+        public float     PositionX           { get; set; }
+        public int       Velocity            { get; private set; }
 
         public float Process    { get; set; }
         public bool  IsObstacle { get; set; }
@@ -26,9 +25,21 @@ namespace BaseDuet.Scripts.Notes
         public bool IsStrong     { get; set; }
         public bool IsMoodChange { get; set; }
 
-
-        public NoteModel(int   id,      Sprite noteSprite, AudioClip noteAudioClip, float duration,     float     timeAppear, float delayTimeToNextNote, float positionX, int velocity,
-                         float process, bool   isStrong,   bool      isObstacle,    bool  isMoodChange, ELongNote eLongNote = ELongNote.None)
+        public NoteModel(
+            int       id,
+            Sprite    noteSprite,
+            AudioClip noteAudioClip,
+            float     duration,
+            float     timeAppear,
+            float     delayTimeToNextNote,
+            float     positionX,
+            int       velocity,
+            float     process,
+            bool      isStrong,
+            bool      isObstacle,
+            bool      isMoodChange,
+            ELongNote eLongNote = ELongNote.None
+        )
         {
             this.Id                  = id;
             this.NoteSprite          = noteSprite;

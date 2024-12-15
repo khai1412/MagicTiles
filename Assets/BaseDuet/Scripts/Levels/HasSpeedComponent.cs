@@ -1,10 +1,7 @@
 namespace BaseDuet.Scripts.Levels
 {
-    using BaseDuet.Scripts.Extensions;
-    using TheOneStudio.UITemplate.UITemplate.Extension;
     using UnityEngine;
-    using UnityEngine.Serialization;
-    using UnityEngine.UI;
+    using GameCore.Extensions;
 
     public class HasSpeedComponent : MonoBehaviour
     {

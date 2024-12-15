@@ -7,8 +7,7 @@ namespace BaseDuet.Scripts.Characters
     using BaseDuet.Scripts.Interfaces;
     using BaseDuet.Scripts.Notes;
     using DG.Tweening;
-    using GameFoundation.DI;
-    using GameFoundation.Scripts.Utilities.ObjectPool;
+    using GameCore.Services.Implementations.ObjectPool;
     using UnityEngine;
     using Screen = UnityEngine.Device.Screen;
 
@@ -16,8 +15,8 @@ namespace BaseDuet.Scripts.Characters
     {
         #region Inject
 
-        [Inject] private BaseDuetCharacterViewHelper BaseDuetCharacterViewHelper;
-        [Inject] private GlobalDataController        globalDataController;
+        private BaseDuetCharacterViewHelper BaseDuetCharacterViewHelper;
+        private GlobalDataController        globalDataController;
 
         #endregion
 

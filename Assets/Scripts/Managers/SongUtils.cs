@@ -1,8 +1,8 @@
-namespace TheOneStudio.HyperCasual.Managers
+namespace MagicTiles.Scripts.Managers
 {
     using Cysharp.Threading.Tasks;
-    using TheOneStudio.HyperCasual.Models;
-    using TheOneStudio.HyperCasual.Utils;
+    using MagicTiles.Scripts.Models;
+    using MagicTiles.Scripts.Utils;
     using UnityEngine;
 
     public class SongUtils

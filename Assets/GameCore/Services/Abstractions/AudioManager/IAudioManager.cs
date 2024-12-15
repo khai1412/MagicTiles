@@ -9,9 +9,17 @@
         void  ResumePlayList();
         float GetPlayListTime();
 
-        void  PlaySound(AudioClip audioClip, float volumeScale = 1f);
+        void  PlaySound(AudioClip audioClip, float volumeScale = 1f, bool isLoop = false);
+        void  PlaySound(string    audioName, float volumeScale = 1f, bool isLoop = false);
         void  PauseSound();
         void  ResumeSound();
         float GetSoundTime();
+
+        void StopAllSound();
+        void StopPlayList();
+        void SetPlayListPitch(float pitch);
+
+        void SetPlayListTime(float time);
+        void SetPlayListLoop(bool  isLoop);
     }
 }

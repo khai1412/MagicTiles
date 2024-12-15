@@ -4,6 +4,8 @@
 
     public interface IScreenManager
     {
+        IScreen CurrentActiveScreen { get; }
         UniTask OpenScreen<T>();
+        void    CloseAllScreen();
     }
 }

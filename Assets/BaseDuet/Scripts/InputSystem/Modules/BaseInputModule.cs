@@ -3,30 +3,25 @@ namespace BasePlayerInput.InputSystem.Modules
     using System;
     using BaseDuet.Scripts.InputSystem.Interfaces.IDragDrop;
     using BasePlayerInput.InputSystem.Interfaces.IDragDrop;
-    using GameFoundation.Scripts.Utilities;
-    using GameFoundation.Signals;
+    using Services.Abstractions.AudioManager;
     using UnityEngine;
-    
 
     public abstract class BaseInputModule
     {
         public Action<BaseInputModule> OnTouchRelease;
         public int                     touchId;
         public IDragTarget             dragCache;
-        
+
         protected          Camera             mainCam;
-        protected readonly SignalBus          signalBus;
         protected          PlayerInputManager playerInputManager;
-        protected readonly IAudioService      audioService;
+        protected readonly IAudioManager      audioService;
         protected          Touch              touch;
 
-
-        private const    int          RaycastHitBufferAmount = 10;
+        private const    int            RaycastHitBufferAmount = 10;
         private readonly RaycastHit2D[] raycastHitBuffer       = new RaycastHit2D[RaycastHitBufferAmount];
 
-        protected BaseInputModule(SignalBus signalBus, IAudioService audioService, PlayerInputManager playerInputManager)
+        protected BaseInputModule(IAudioManager audioService, PlayerInputManager playerInputManager)
         {
-            this.signalBus          = signalBus;
             this.playerInputManager = playerInputManager;
             this.audioService       = audioService;
         }
@@ -65,21 +60,14 @@ namespace BasePlayerInput.InputSystem.Modules
             this.touch   = touch;
             switch (touch.phase)
             {
-                case TouchPhase.Began:
-                    this.OnBegin(touch.position);
-                    break;
-                case TouchPhase.Moved:
-                    this.OnMove(touch.position);
-                    break;
-                case TouchPhase.Stationary:
-                    break;
-                case TouchPhase.Ended:
-                    this.OnEnd(touch.position);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case TouchPhase.Began:      this.OnBegin(touch.position); break;
+                case TouchPhase.Moved:      this.OnMove(touch.position); break;
+                case TouchPhase.Stationary: break;
+                case TouchPhase.Ended:      this.OnEnd(touch.position); break;
+                default:                    throw new ArgumentOutOfRangeException();
             }
         }
+
         public             void ResetModule() => this.OnReset();
         protected abstract void OnBegin(Vector2 touchPosition);
         protected abstract void OnMove(Vector2  touchPosition);

@@ -1,7 +1,7 @@
-namespace TheOneStudio.HyperCasual.Managers
+namespace MagicTiles.Scripts.Managers
 {
+    using MagicTiles.Scripts.Utils;
     using Services.Abstractions.AudioManager;
-    using TheOneStudio.HyperCasual.Utils;
 
     public class PreviewSongManager
     {

@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Models
+namespace MagicTiles.Scripts.Models
 {
     public enum ECategory
     {

@@ -11,37 +11,29 @@ namespace BaseDuet.Scripts.Data.SessionData
     using BaseDuet.Scripts.Signals;
     using Cysharp.Threading.Tasks;
     using DG.Tweening;
-    using GameFoundation.Scripts.Utilities;
-    using GameFoundation.Signals;
+    using Services.Abstractions.AudioManager;
     using UnityEngine;
 
     public partial class GlobalDataController
     {
         private readonly GlobalData                  globalData;
-        private readonly IAudioService               audioService;
+        private readonly IAudioManager               audioService;
         private readonly LevelController             levelController;
-        private readonly SpeedBlueprint              speedBlueprint;
         private readonly BaseDuetLocalDataController duetLocalDataController;
-        private readonly SignalBus                   signalBus;
         public           StaticValueBlueprint        StaticValueBlueprint { get; private set; }
         public GlobalDataController(
             GlobalData                  globalData,
-            IAudioService               audioService,
+            IAudioManager               audioService,
             StaticValueBlueprint        staticValueBlueprint,
             LevelController             levelController,
-            SpeedBlueprint              speedBlueprint,
-            BaseDuetLocalDataController duetLocalDataController,
-            SignalBus                   signalBus
+            BaseDuetLocalDataController duetLocalDataController
         )
         {
             this.globalData              = globalData;
             this.audioService            = audioService;
             this.levelController         = levelController;
-            this.speedBlueprint          = speedBlueprint;
             this.duetLocalDataController = duetLocalDataController;
-            this.signalBus               = signalBus;
             this.StaticValueBlueprint    = staticValueBlueprint;
-            this.signalBus.Subscribe<NoteHitSignal>(this.OnNoteHitSignal);
         }
 
         #region Properties
@@ -153,8 +145,6 @@ namespace BaseDuet.Scripts.Data.SessionData
 
                 this.TotalNoteHit++;
             }
-
-            this.signalBus.Fire(new NoteDataChangeSignal());
         }
 
         public void PauseTime()  { this.TimeScale = 0; }
@@ -221,7 +211,8 @@ namespace BaseDuet.Scripts.Data.SessionData
                        {
                            this.IsInvincible = false;
                        })
-                       .ToUniTask(cancellationToken: this.invicibleCancelToken.Token);
+                       // .ToUniTask(cancellationToken: this.invicibleCancelToken.Token)
+                       ;
             }
             catch (Exception e)
             {
@@ -239,7 +230,6 @@ namespace BaseDuet.Scripts.Data.SessionData
         {
             this.CurrentSongDifficulty = difficulty;
             this.CurrentSongSegment    = segment;
-            this.NoteSpeed             = this.speedBlueprint[difficulty].SegmentSpeedRecords[segment].Speed;
             Debug.Log($"Note speed: {this.NoteSpeed}");
         }
         public void ResetNoteSpeed() => this.SetNoteSpeed(this.CurrentSongDifficulty, ESongSegment.Intro);

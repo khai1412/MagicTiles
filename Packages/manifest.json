@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.messagepipe": "1.8.1",
     "com.cysharp.r3": "1.2.9",
     "com.cysharp.unitask": "2.5.10",
     "com.unity.2d.animation": "10.1.4",

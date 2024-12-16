@@ -22,10 +22,11 @@ namespace BaseDuet.Scripts.Levels
     [RequireComponent(typeof(LevelView))]
     public class LevelController : MonoBehaviour, IStatedComponent, IController<LevelModel, LevelView>
     {
-        private ObjectPoolManager       objectPoolManager;
-        private IAudioManager           audioService;
-        private GlobalDataController    globalDataController;
-        private PlayerInputManager      playerInputManager;
+        private ObjectPoolManager    objectPoolManager;
+        private IAudioManager        audioService;
+        private GlobalDataController globalDataController;
+        private PlayerInputManager   playerInputManager;
+
         public  LevelModel              Model { get; private set; }
         public  LevelView               View  { get; private set; }
         private float                   songDuration;
@@ -36,11 +37,6 @@ namespace BaseDuet.Scripts.Levels
         private int                     moodIndex;
         private bool                    isFirstHitNote;
         private CancellationTokenSource cancellationTokenSource;
-
-        private void Start()
-        {
-            this.PrepareState();
-        }
 
         public void BindData(LevelModel model, LevelView view)
         {
@@ -119,8 +115,8 @@ namespace BaseDuet.Scripts.Levels
             this.View.FinalTutorialTimeline.gameObject.SetActive(false);
             this.View.TutorialTimeline.gameObject.SetActive(this.globalDataController.IsGameplayTutorial);
             this.View.ObstacleTimeline.gameObject.SetActive(false);
-            this.View.SpeedUpVFX.SetActive(false);
-            this.View.SplitLine.SetActive(true);
+            if (this.View.SpeedUpVFX != null) this.View.SpeedUpVFX.SetActive(false);
+            if (this.View.SplitLine != null) this.View.SplitLine.SetActive(true);
             this.View.DogLine.gameObject.SetActive(true);
             this.View.CrossLine.gameObject.SetActive(true);
             this.playerInputManager.ResetModuleList();

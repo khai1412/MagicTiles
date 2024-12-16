@@ -166,16 +166,19 @@ namespace MagicTiles.Scripts.Managers
 
         public async UniTask LoadSong(byte[] midiContent, AudioClip audioClip, int seed = 0)
         {
-            var models = await this.midiGenerator.GetNoteModels(midiContent, seed, this.currentDuetDuetComposedLevelData.RemoteLevelRecord.difficultyLevel,
-                this.currentDuetDuetComposedLevelData.LevelRecord.HasObstacle);
+            var models = await this.midiGenerator.GetNoteModels(midiContent, seed, "Easy",
+                false);
             this.globalDataController.TotalNote = models.Count(x => !x.IsObstacle && x.ELongNote is not (ELongNote.Body or ELongNote.Tail));
             Debug.Log($"Total note: {this.globalDataController.TotalNote}");
             this.globalDataController.TotalObstacle = models.Count(x => x.IsObstacle);
-            var moodThemes = this.currentDuetDuetComposedLevelData.LevelRecord.ListThemes
-                .Select(x => this.gameAssets.Load<MoodThemeConfig>(x)).ToList();
+            var moodThemes = new List<string>()
+            {
+                "ScriptableObjects/MoodConfigs/BlueTheme",
+                "ScriptableObjects/MoodConfigs/GreenTheme",
+            }.Select(x => this.gameAssets.Load<MoodThemeConfig>(x)).ToList();
 
-            var levelModel = new LevelModel(models, this.currentDuetDuetComposedLevelData.LevelRecord.StoryIntro,
-                this.currentDuetDuetComposedLevelData.LevelRecord.StoryOutro, moodThemes,
+            var levelModel = new LevelModel(models, null,
+                null, moodThemes,
                 new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY),
                 new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY));
             this.CurrentLevelModel = levelModel;

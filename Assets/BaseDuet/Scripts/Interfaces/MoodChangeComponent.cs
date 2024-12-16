@@ -26,7 +26,7 @@ namespace BaseDuet.Scripts.Interfaces
                     colorComponent.ChangeColor(color);
                 }
             }
-            
+
             foreach (var speedComponent in this.SpeedComponents)
             {
                 if (this.currentMoodThemeConfig.NameToSpeed.TryGetValue(speedComponent.SpeedComponentName, out var speed))

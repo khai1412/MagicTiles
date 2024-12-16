@@ -2,78 +2,80 @@
 
 namespace GameCore.Services.Implementations.AudioManager
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
     public class AudioManager : IAudioManager
     {
-        public void  PlayPlayList(AudioClip audioClip, float volumeScale = 1)
+        private List<AudioSource> freeSoundSources = new();
+        private List<AudioSource> usedSoundSources = new();
+
+        private List<AudioSource> freePlayListSources = new();
+        private List<AudioSource> usedPlayListSources = new();
+
+        private void InternalPlaySound(AudioClip audioClip, float volumeScale = 1, bool isLoop = false)
         {
-            throw new System.NotImplementedException();
         }
 
-        public void  PausePlayList()
+
+        public void PlayPlayList(AudioClip audioClip, float volumeScale = 1)
         {
-            throw new System.NotImplementedException();
         }
 
-        public void  ResumePlayList()
+        public void PausePlayList()
         {
-            throw new System.NotImplementedException();
+        }
+
+        public void ResumePlayList()
+        {
         }
 
         public float GetPlayListTime()
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
-        public void  PlaySound(AudioClip audioClip, float volumeScale = 1, bool isLoop = false)
+        public void PlaySound(AudioClip audioClip, float volumeScale = 1, bool isLoop = false)
         {
-            throw new System.NotImplementedException();
         }
 
-        public void  PlaySound(string    audioName, float volumeScale = 1, bool isLoop = false)
+        public void PlaySound(string audioName, float volumeScale = 1, bool isLoop = false)
         {
-            throw new System.NotImplementedException();
         }
 
-        public void  PauseSound()
+        public void PauseSound()
         {
-            throw new System.NotImplementedException();
         }
 
-        public void  ResumeSound()
+        public void ResumeSound()
         {
-            throw new System.NotImplementedException();
         }
 
         public float GetSoundTime()
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public void StopAllSound()
         {
-            throw new System.NotImplementedException();
         }
 
         public void StopPlayList()
         {
-            throw new System.NotImplementedException();
         }
 
         public void SetPlayListPitch(float pitch)
         {
-            throw new System.NotImplementedException();
         }
 
         public void SetPlayListTime(float time)
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public void SetPlayListLoop(bool  isLoop)
+        public void SetPlayListLoop(bool isLoop)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }

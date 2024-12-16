@@ -7,8 +7,10 @@ namespace BaseDuet.Scripts.Characters
     using BaseDuet.Scripts.Interfaces;
     using BaseDuet.Scripts.Notes;
     using DG.Tweening;
+    using GameCore.Extensions;
     using GameCore.Services.Implementations.ObjectPool;
     using UnityEngine;
+    using VContainer;
     using Screen = UnityEngine.Device.Screen;
 
     public class CharacterDogController : MonoBehaviour, IStatedComponent, IController<CharacterModel, CharacterView>, IDragTarget
@@ -17,6 +19,13 @@ namespace BaseDuet.Scripts.Characters
 
         private BaseDuetCharacterViewHelper BaseDuetCharacterViewHelper;
         private GlobalDataController        globalDataController;
+
+        private void Awake()
+        {
+            var container = this.GetCurrentContainer();
+            this.BaseDuetCharacterViewHelper = container.Resolve<BaseDuetCharacterViewHelper>();
+            this.globalDataController        = container.Resolve<GlobalDataController>();
+        }
 
         #endregion
 
@@ -34,17 +43,21 @@ namespace BaseDuet.Scripts.Characters
 
         protected Vector3 cachePosition;
 
-
         public virtual void PrepareState()
         {
             this.View.ShieldVfx.transform.gameObject.SetActive(false);
             this.View.SpeedUpVFX.gameObject.SetActive(false);
         }
-        public virtual void BindSkin(int index) { this.BaseDuetCharacterViewHelper.BindTopDownCharacterSkin(this.View, index); }
+
+        public virtual void BindSkin(int index)
+        {
+            this.BaseDuetCharacterViewHelper.BindTopDownCharacterSkin(this.View, index);
+        }
 
         public virtual void StartState()  { }
         public virtual void PauseState()  { }
         public virtual void ResumeState() { }
+
         public virtual void ReviveState()
         {
             this.View.ShieldVfx.transform.localScale = Vector3.zero;
@@ -52,9 +65,16 @@ namespace BaseDuet.Scripts.Characters
             this.View.ShieldVfx.transform.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
             this.View.ShieldVfx.transform.DOScale(Vector3.zero, 1f).SetDelay(this.globalDataController.InvincibleTime - 2).SetEase(Ease.Linear).OnComplete(() => this.View.ShieldVfx.transform.gameObject.SetActive(false));
         }
-        public virtual void EndState()   { this.RecycleDog(); }
-        private        void RecycleDog() { this.View.Recycle(); }
 
+        public virtual void EndState()
+        {
+            this.RecycleDog();
+        }
+
+        private void RecycleDog()
+        {
+            this.View.Recycle();
+        }
 
         public void BindData(CharacterModel model, CharacterView view)
         {
@@ -62,12 +82,12 @@ namespace BaseDuet.Scripts.Characters
             this.View  = view;
             if (this.View == null) this.View = this.GetComponent<CharacterView>();
             this.View.GetComponent<BoxCollider2D>().size =
-#if !UNITY_EDITOR
+                #if !UNITY_EDITOR
                 new(100, 100);
-#else
+                #else
                 new(300, 100);
 
-#endif
+            #endif
             this.View.GetComponent<BoxCollider2D>().offset = new(0, 25);
 
             this.DoIdleAnimation();
@@ -97,17 +117,23 @@ namespace BaseDuet.Scripts.Characters
         {
             this.cachePosition   =  this.transform.position;
             this.cachePosition.x += this.globalDataController.Sensitivity / 2 * direction.x;
-            if (this.MaxX > 0) this.cachePosition.x = Math.Clamp(this.cachePosition.x, this.MinX, this.MaxX);
-            else this.cachePosition.x               = Math.Clamp(this.cachePosition.x, this.MaxX, this.MinX);
-
+            if (this.MaxX > 0)
+                this.cachePosition.x = Math.Clamp(this.cachePosition.x, this.MinX, this.MaxX);
+            else
+                this.cachePosition.x = Math.Clamp(this.cachePosition.x, this.MaxX, this.MinX);
 
             this.View.transform.position = this.cachePosition;
         }
 
         public void OnEndDrag(Vector3 worldPosition) { }
 
-        public void DragSucceed()    { }
-        public void DoWinAnimation() { this.View.transform.DOLocalMoveY(Screen.height + 600, 1f); }
+        public void DragSucceed() { }
+
+        public void DoWinAnimation()
+        {
+            this.View.transform.DOLocalMoveY(Screen.height + 600, 1f);
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out this.cacheNote))
@@ -126,18 +152,19 @@ namespace BaseDuet.Scripts.Characters
                     this.View.NormalNoteParticleSystem.Play();
                 }
 
-                if (this.cacheNote.Model.IsMoodChange)
-                    this.View.MoodChangeNoteParticleSystem.Play();
+                if (this.cacheNote.Model.IsMoodChange) this.View.MoodChangeNoteParticleSystem.Play();
                 this.cacheNote.DoMoveAnimation(this.transform.position, 0.1f);
                 this.DoHitAnimation();
             }
         }
+
         public void DoSpeedUpAnimation()
         {
             this.View.SpeedUpVFX.gameObject.SetActive(true);
             this.View.SpeedUpVFX.transform.DOKill();
             this.View.SpeedUpVFX.transform.DOScale(this.View.SpeedUpVFX.transform.localScale, this.globalDataController.SpeedUpTime).SetUpdate(true).OnComplete(() => this.View.SpeedUpVFX.gameObject.SetActive(false));
         }
+
         private void Update()
         {
             if (!this.hasHit || this.View.ItemSkeletonAnimation.AnimationState.GetCurrent(0).Animation.Name == this.IDLE_ANIM_NAME) return;
@@ -151,9 +178,10 @@ namespace BaseDuet.Scripts.Characters
 
         protected virtual void DoIdleAnimation()
         {
-            this.View.ItemSkeletonAnimation.AnimationState.SetAnimation(0, this.IDLE_ANIM_NAME, true);
+            // this.View.ItemSkeletonAnimation.AnimationState.SetAnimation(0, this.IDLE_ANIM_NAME, true);
             this.hasHit = false;
         }
+
         protected virtual void DoHitAnimation()
         {
             if (this.View.ItemSkeletonAnimation.AnimationState.GetCurrent(0).Animation.Name == this.HIT_ANIM_NAME) return;

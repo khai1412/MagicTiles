@@ -2,6 +2,6 @@
 {
     public interface IAssetManager
     {
-        T Load<T>(string path);
+        T Load<T>(string path) where T : UnityEngine.Object;
     }
 }

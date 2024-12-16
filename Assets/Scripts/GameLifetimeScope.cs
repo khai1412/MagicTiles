@@ -25,7 +25,7 @@
         {
             builder.RegisterGameCore();
             BaseDuetInstaller.Configure(builder);
-            // GameStateMachineInstaller.Configure(builder);
+            GameStateMachineInstaller.Configure(builder);
 
             builder.Register<UserLocalData>(Lifetime.Singleton);
             builder.Register<UserLocalDataController>(Lifetime.Singleton);
@@ -42,6 +42,7 @@
             builder.Register<TimeHelper>(Lifetime.Singleton);
 
             builder.Register<WebRequestUtils>(Lifetime.Singleton);
+            builder.Register<SongUtils>(Lifetime.Singleton);
         }
     }
 }

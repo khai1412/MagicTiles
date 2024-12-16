@@ -92,18 +92,19 @@ namespace MagicTiles.Scripts.MIDI
             // Get all track for processing
             for (int i = 0; i < songFile.Tracks.Length; i++)
             {
-                if (!string.IsNullOrWhiteSpace(songFile.Tracks[i].trackName))
-                {
-                    switch (songFile.Tracks[i].trackName.Trim().ToLower())
-                    {
-                        case TRACK_MAIN:     this.mainTrack     = songFile.Tracks[i]; break;
-                        case "fl keys":      this.mainTrack     = songFile.Tracks[i]; break;
-                        case TRACK_SUPPORT:  this.supportTrack  = songFile.Tracks[i]; break;
-                        case TRACK_MOTIF:    this.motifTrack    = songFile.Tracks[i]; break;
-                        case TRACK_RELATION: this.relationTrack = songFile.Tracks[i]; break;
-                        case TRACK_OBSTACLE: this.obstacleTrack = songFile.Tracks[i]; break;
-                    }
-                }
+                // if (!string.IsNullOrWhiteSpace(songFile.Tracks[i].trackName))
+                // {
+                //     switch (songFile.Tracks[i].trackName.Trim().ToLower())
+                //     {
+                //         case TRACK_MAIN:     this.mainTrack     = songFile.Tracks[i]; break;
+                //         case "fl keys":      this.mainTrack     = songFile.Tracks[i]; break;
+                //         case TRACK_SUPPORT:  this.supportTrack  = songFile.Tracks[i]; break;
+                //         case TRACK_MOTIF:    this.motifTrack    = songFile.Tracks[i]; break;
+                //         case TRACK_RELATION: this.relationTrack = songFile.Tracks[i]; break;
+                //         case TRACK_OBSTACLE: this.obstacleTrack = songFile.Tracks[i]; break;
+                //     }
+                // }
+                this.mainTrack = songFile.Tracks[2];
             }
 
             this.MidiEventToList(this.mainTrack.midiEvents, songFile, this.notesList);
@@ -331,9 +332,9 @@ namespace MagicTiles.Scripts.MIDI
                 for (var i = 0; i < notes.Count; i++)
                 {
                     var note = notes[i];
-                    if (note.laneIndex is < 96 or > 104) continue;
+                    if (note.laneIndex is < 31 or > 57) continue;
                     var duration     = Mathf.Max(note.realDuration - 0.2f, 0);
-                    var positionX    = Mathf.Clamp(note.laneIndex - 98.5f, -2.5f, 2.5f);
+                    var positionX    = Mathf.Clamp(note.laneIndex - 39.5f, -2.5f, 2.5f);
                     var isStrong     = note.velocity > 101.6f;
                     var isMoodChange = listMoodchangeTime.Any(x => x == note.timeAppear) && !isObstalce;
                     positionX = positionX == 0 ? 0.5f : positionX;

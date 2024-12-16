@@ -2,10 +2,10 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BasePlayerInput.InputSystem;
     using Cysharp.Threading.Tasks;
+    using GameCore.Core.ScreenManager;
+    using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.Managers;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
-    using Services.Abstractions.ScreenManager;
-    using Services.Abstractions.StateMachine;
 
     public class GameHomeState : IGameState
     {

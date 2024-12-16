@@ -1,5 +1,6 @@
 namespace BaseDuet.Scripts.Data.LocalData
 {
+    using System;
     using System.Collections.Generic;
     using GameCore.Services.Abstractions.LocalData;
 
@@ -18,6 +19,8 @@ namespace BaseDuet.Scripts.Data.LocalData
         public bool                                        IsShopTutorial     { get; set; } = false;
         public bool                                        IsObstacleTutorial { get; set; } = false;
         public bool                                        IsAlbumTutorial    { get; set; } = false;
+
+        public Type                                        ControllerType     { get; }
     }
 
     public class BaseDuetLocalDataRecord

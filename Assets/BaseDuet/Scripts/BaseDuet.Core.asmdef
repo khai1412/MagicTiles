@@ -8,6 +8,7 @@
     "GameCore.Extensions",
     "DOTween.Extension",
     "spine-unity",
-    "spine-csharp"
+    "spine-csharp",
+    "GameCore.Core"
   ]
 }

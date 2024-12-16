@@ -9,9 +9,9 @@ namespace BaseDuet.Scripts.Notes
     using BaseDuet.Scripts.Signals;
     using Cysharp.Threading.Tasks;
     using DG.Tweening;
+    using GameCore.Core.AudioManager;
     using GameCore.Extensions;
     using GameCore.Services.Implementations.ObjectPool;
-    using Services.Abstractions.AudioManager;
     using UnityEngine;
     using VContainer;
 

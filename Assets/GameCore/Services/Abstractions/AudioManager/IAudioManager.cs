@@ -1,4 +1,4 @@
-﻿namespace Services.Abstractions.AudioManager
+﻿namespace GameCore.Core.AudioManager
 {
     using UnityEngine;
 

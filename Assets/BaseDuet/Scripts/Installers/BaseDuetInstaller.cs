@@ -4,6 +4,7 @@ namespace BaseDuet.Scripts.Installers
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Helpers;
     using BaseDuet.Scripts.Levels;
+    using BasePlayerInput.InputSystem;
     using VContainer;
     using VContainer.Unity;
 
@@ -15,7 +16,9 @@ namespace BaseDuet.Scripts.Installers
             builder.Register<BaseDuetCharacterViewHelper>(Lifetime.Singleton);
             builder.Register<GlobalData>(Lifetime.Singleton);
             builder.RegisterComponentInHierarchy<LevelController>();
+            builder.Register<BaseDuetLocalData>(Lifetime.Singleton);
             builder.Register<BaseDuetLocalDataController>(Lifetime.Singleton);
+            builder.Register<PlayerInputManager>(Lifetime.Singleton);
         }
     }
 }

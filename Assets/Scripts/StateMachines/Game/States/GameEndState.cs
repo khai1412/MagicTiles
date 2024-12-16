@@ -2,10 +2,10 @@
 {
     using BaseDuet.Scripts.Data.SessionData;
     using BasePlayerInput.InputSystem;
+    using GameCore.Core.ScreenManager;
+    using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.Managers;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
-    using Services.Abstractions.ScreenManager;
-    using Services.Abstractions.StateMachine;
 
     public class GameEndState : IGameState
     {

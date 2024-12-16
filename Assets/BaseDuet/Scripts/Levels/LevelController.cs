@@ -13,8 +13,8 @@ namespace BaseDuet.Scripts.Levels
     using Cysharp.Threading.Tasks;
     using BasePlayerInput.InputSystem;
     using DG.Tweening;
+    using GameCore.Core.AudioManager;
     using GameCore.Services.Implementations.ObjectPool;
-    using Services.Abstractions.AudioManager;
     using UnityEngine;
     using GameCore.Extensions;
     using VContainer;
@@ -36,6 +36,11 @@ namespace BaseDuet.Scripts.Levels
         private int                     moodIndex;
         private bool                    isFirstHitNote;
         private CancellationTokenSource cancellationTokenSource;
+
+        private void Start()
+        {
+            this.PrepareState();
+        }
 
         public void BindData(LevelModel model, LevelView view)
         {

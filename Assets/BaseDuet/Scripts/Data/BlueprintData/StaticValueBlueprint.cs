@@ -2,6 +2,7 @@ namespace BaseDuet.Scripts.Data.BlueprintData
 {
     using UnityEngine;
 
+    [CreateAssetMenu(fileName = "StaticValueBlueprint", menuName = "ScriptableObjects/StaticValueBlueprint")]
     public class StaticValueBlueprint : ScriptableObject
     {
         public float  BaseNoteSpeed         { get; set; }

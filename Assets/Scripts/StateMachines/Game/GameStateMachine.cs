@@ -3,13 +3,11 @@ namespace MagicTiles.Scripts.StateMachines.Game
     using System.Collections.Generic;
     using System.Linq;
     using BaseDuet.Scripts.Data.SessionData;
-    using BaseDuet.Scripts.Signals;
+    using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
     using MagicTiles.Scripts.StateMachines.Game.States;
-    using Services.Abstractions.StateMachine;
-    using MagicTiles.Scripts.Models;
-    using UnityEditorInternal;
     using VContainer.Unity;
+    using StateMachine = GameCore.Services.Implementations.StateMachine.StateMachine;
 
     public class GameStateMachine : StateMachine, IStartable
     {
@@ -27,7 +25,7 @@ namespace MagicTiles.Scripts.StateMachines.Game
 
         public void Start()
         {
-            this.TransitionTo<GameHomeState>();
+            this.TransitionTo<GamePrepareState>();
         }
     }
 }

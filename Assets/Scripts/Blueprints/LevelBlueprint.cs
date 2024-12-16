@@ -4,6 +4,7 @@ namespace MagicTiles.Scripts.Blueprints
     using GameCore.Extensions;
     using UnityEngine;
 
+    [CreateAssetMenu(fileName = "LevelBlueprint", menuName = "ScriptableObjects/LevelBlueprint")]
     public class LevelBlueprint : ScriptableObject
     {
         public UnitySerializedDictionary<string, LevelRecord> LevelRecords;

@@ -9,6 +9,8 @@ namespace MagicTiles.Scripts.Managers
     using BaseDuet.Scripts.Models;
     using BaseDuet.Scripts.Signals;
     using Cysharp.Threading.Tasks;
+    using GameCore.Core.AssetsManager;
+    using GameCore.Core.AudioManager;
     using MagicTiles.Scripts.Blueprints;
     using MagicTiles.Scripts.Helpers;
     using MagicTiles.Scripts.MIDI;
@@ -16,8 +18,6 @@ namespace MagicTiles.Scripts.Managers
     using MagicTiles.Scripts.StateMachines.Game;
     using MagicTiles.Scripts.StateMachines.Game.States;
     using MagicTiles.Scripts.Utils;
-    using Services.Abstractions.AssetsManager;
-    using Services.Abstractions.AudioManager;
     using UnityEngine;
 
     public class SongManager
@@ -31,42 +31,42 @@ namespace MagicTiles.Scripts.Managers
 
         private readonly MidiGenerator midiGenerator;
 
-        // private readonly LevelBlueprint          levelBlueprint;
+        private readonly LevelBlueprint          levelBlueprint;
         private readonly UserLocalDataController userLocalDataController;
-        private readonly TimeHelper         timeHelper;
-        private readonly WebRequestUtils    webRequestUtils;
-        private readonly IAssetManager      gameAssets;
-        private readonly IAudioManager      audioService;
-        private readonly PreviewSongManager previewSongManager;
-        private readonly GameStateMachine   gameStateMachine;
+        private readonly TimeHelper              timeHelper;
+        private readonly WebRequestUtils         webRequestUtils;
+        private readonly IAssetManager           gameAssets;
+        private readonly IAudioManager           audioService;
+        private readonly PreviewSongManager      previewSongManager;
+        private readonly GameStateMachine        gameStateMachine;
 
         public SongManager(
             LevelController levelController,
             // UITemplateSettingDataController   uiTemplateSettingDataController,
-            GlobalDataController globalDataController,
-            MidiGenerator        midiGenerator,
-            // LevelBlueprint          levelBlueprint,
+            GlobalDataController    globalDataController,
+            MidiGenerator           midiGenerator,
+            LevelBlueprint          levelBlueprint,
             UserLocalDataController userLocalDataController,
-            TimeHelper         timeHelper,
-            WebRequestUtils    webRequestUtils,
-            IAssetManager      gameAssets,
-            IAudioManager      audioService,
-            PreviewSongManager previewSongManager,
-            GameStateMachine   gameStateMachine
+            TimeHelper              timeHelper,
+            WebRequestUtils         webRequestUtils,
+            IAssetManager           gameAssets,
+            IAudioManager           audioService,
+            PreviewSongManager      previewSongManager
+            // GameStateMachine        gameStateMachine
         )
         {
             this.levelController = levelController;
             // this.uiTemplateSettingDataController   = uiTemplateSettingDataController;
-            this.globalDataController = globalDataController;
-            this.midiGenerator        = midiGenerator;
-            // this.levelBlueprint          = levelBlueprint;
+            this.globalDataController    = globalDataController;
+            this.midiGenerator           = midiGenerator;
+            this.levelBlueprint          = levelBlueprint;
             this.userLocalDataController = userLocalDataController;
-            this.timeHelper         = timeHelper;
-            this.webRequestUtils    = webRequestUtils;
-            this.gameAssets         = gameAssets;
-            this.audioService       = audioService;
-            this.previewSongManager = previewSongManager;
-            this.gameStateMachine   = gameStateMachine;
+            this.timeHelper              = timeHelper;
+            this.webRequestUtils         = webRequestUtils;
+            this.gameAssets              = gameAssets;
+            this.audioService            = audioService;
+            this.previewSongManager      = previewSongManager;
+            // this.gameStateMachine        = gameStateMachine;
             this.InitSong("");
         }
 
@@ -186,11 +186,11 @@ namespace MagicTiles.Scripts.Managers
         public void InitSong(string strListSong)
         {
             if (String.IsNullOrEmpty(strListSong))
-                this.ListLevelRecord = this.levelBlueprint.Select(x => x.Value).ToList();
+                this.ListLevelRecord = this.levelBlueprint.LevelRecords.Select(x => x.Value).ToList();
             else
             {
                 var listSong = strListSong.Split(",").Select(x => x).ToList();
-                this.ListLevelRecord = this.levelBlueprint.Where(x => listSong.Contains(x.Value.SongId)).Select(x => x.Value).ToList();
+                this.ListLevelRecord = this.levelBlueprint.LevelRecords.Where(x => listSong.Contains(x.Value.SongId)).Select(x => x.Value).ToList();
             }
         }
 

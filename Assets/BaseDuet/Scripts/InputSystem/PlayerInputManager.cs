@@ -9,7 +9,7 @@ namespace BasePlayerInput.InputSystem
     using BaseDuet.Scripts.InputSystem.Modules.DragMultipleModule;
     using BasePlayerInput.InputSystem.Interfaces.IDragDrop;
     using BasePlayerInput.InputSystem.Modules;
-    using Services.Abstractions.AudioManager;
+    using GameCore.Core.AudioManager;
     using UnityEngine;
     using VContainer.Unity;
 

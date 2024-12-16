@@ -1,4 +1,4 @@
-﻿namespace Services.Abstractions.StateMachine
+﻿namespace GameCore.Core.StateMachine
 {
     using System;
 

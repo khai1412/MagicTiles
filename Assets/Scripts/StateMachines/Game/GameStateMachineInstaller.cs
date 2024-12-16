@@ -4,7 +4,6 @@ namespace MagicTiles.Scripts.StateMachines.Game
     using GameCore.Extensions;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
     using VContainer;
-    using VContainer.Unity;
 
     public class GameStateMachineInstaller
     {

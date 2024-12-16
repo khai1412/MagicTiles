@@ -2,6 +2,8 @@
   "name": "MagicTiles.Services",
   "references": [
     "VContainer",
-    "UniTask"
+    "UniTask",
+    "GameCore.Core",
+    "GameCore.Extensions"
   ]
 }

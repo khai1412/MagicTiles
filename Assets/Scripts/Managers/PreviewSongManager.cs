@@ -1,7 +1,7 @@
 namespace MagicTiles.Scripts.Managers
 {
+    using GameCore.Core.AudioManager;
     using MagicTiles.Scripts.Utils;
-    using Services.Abstractions.AudioManager;
 
     public class PreviewSongManager
     {

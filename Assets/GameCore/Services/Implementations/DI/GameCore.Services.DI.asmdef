@@ -2,6 +2,8 @@
   "name": "MagicTiles.Services.Implementations.DI",
   "references": [
     "VContainer",
-    "MagicTiles.Services"
+    "MagicTiles.Services",
+    "GameCore.Core",
+    "GameCore.Extensions"
   ]
 }

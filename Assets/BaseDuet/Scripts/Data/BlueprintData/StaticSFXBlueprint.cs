@@ -2,6 +2,7 @@ namespace BaseDuet.Scripts.Data.BlueprintData
 {
     using UnityEngine;
 
+    [CreateAssetMenu(fileName = "StaticSFXBlueprint", menuName = "ScriptableObjects/StaticSFXBlueprint")]
     public class StaticSFXBlueprint : ScriptableObject
     {
         public string BtnBack        { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Services.Abstractions.AssetsManager
+﻿namespace GameCore.Core.AssetsManager
 {
     public interface IAssetManager
     {

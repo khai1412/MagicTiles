@@ -1,4 +1,4 @@
-﻿namespace Services.Abstractions.ScreenManager
+﻿namespace GameCore.Core.ScreenManager
 {
     using Cysharp.Threading.Tasks;
 

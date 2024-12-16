@@ -3,12 +3,11 @@ namespace MagicTiles.Scripts.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using BaseDuet.Scripts.Data.SessionData;
-    using GameCore.Services.Abstractions.LocalData;
+    using BaseDuet.Scripts.Data.SessionData;using GameCore.Services.Abstractions.LocalData;
     using MagicTiles.Scripts.Blueprints;
     using VContainer.Unity;
 
-    public class UserLocalDataController : ILocalDataHandler, IInitializable
+    public class UserLocalDataController : ILocalDataController, IInitializable
     {
         private readonly UserLocalData        userLocalData;
         private readonly LevelBlueprint       levelBlueprint;
@@ -117,16 +116,6 @@ namespace MagicTiles.Scripts.Models
             {
                 levelData.HasPassed = true;
             }
-        }
-
-        public void Save<T>(T value) where T : ILocalData
-        {
-
-        }
-
-        public T    Load<T>() where T : ILocalData
-        {
-
         }
     }
 }

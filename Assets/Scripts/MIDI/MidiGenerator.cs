@@ -9,9 +9,9 @@ namespace MagicTiles.Scripts.MIDI
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Notes;
     using Cysharp.Threading.Tasks;
+    using GameCore.Core.AssetsManager;
     using MagicTiles.Scripts.Models;
     using MagicTiles.Scripts.Models.Static;
-    using Services.Abstractions.AssetsManager;
     using Random = UnityEngine.Random;
 
     public class MidiGenerator

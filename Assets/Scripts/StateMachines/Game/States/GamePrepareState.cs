@@ -1,11 +1,10 @@
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.BlueprintData;
-    using Cysharp.Threading.Tasks;
+    using GameCore.Core.AudioManager;
+    using GameCore.Core.ScreenManager;
+    using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
-    using Services.Abstractions.AudioManager;
-    using Services.Abstractions.ScreenManager;
-    using Services.Abstractions.StateMachine;
 
     public class GamePrepareState : IGameState
     {

@@ -2,7 +2,7 @@ namespace BaseDuet.Scripts.InputSystem.Modules.DragMultipleModule
 {
     using BasePlayerInput.InputSystem;
     using BasePlayerInput.InputSystem.Modules;
-    using Services.Abstractions.AudioManager;
+    using GameCore.Core.AudioManager;
     using UnityEngine;
 
     public class DragMultipleModule : BaseInputModule

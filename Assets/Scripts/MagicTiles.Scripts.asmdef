@@ -8,6 +8,7 @@
     "BaseDuet.Core",
     "GoogleSheet.Core",
     "CSSynth.Core",
-    "GameCore.Extensions"
+    "GameCore.Extensions",
+    "GameCore.Core"
   ]
 }

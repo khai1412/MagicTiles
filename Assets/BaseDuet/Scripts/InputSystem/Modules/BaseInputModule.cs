@@ -3,7 +3,7 @@ namespace BasePlayerInput.InputSystem.Modules
     using System;
     using BaseDuet.Scripts.InputSystem.Interfaces.IDragDrop;
     using BasePlayerInput.InputSystem.Interfaces.IDragDrop;
-    using Services.Abstractions.AudioManager;
+    using GameCore.Core.AudioManager;
     using UnityEngine;
 
     public abstract class BaseInputModule

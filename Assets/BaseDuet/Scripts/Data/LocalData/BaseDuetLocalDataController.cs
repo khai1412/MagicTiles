@@ -2,9 +2,10 @@ namespace BaseDuet.Scripts.Data.LocalData
 {
     using System.Collections.Generic;
     using System.Linq;
+    using GameCore.Services.Abstractions.LocalData;
     using UnityEngine;
 
-    public class BaseDuetLocalDataController
+    public class BaseDuetLocalDataController : ILocalDataController
     {
         private readonly BaseDuetLocalData baseDuetLocalData;
         public BaseDuetLocalDataController(BaseDuetLocalData baseDuetLocalData) { this.baseDuetLocalData = baseDuetLocalData; }

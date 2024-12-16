@@ -3,6 +3,7 @@ namespace MagicTiles.Scripts.Blueprints
     using GameCore.Extensions;
     using UnityEngine;
 
+    [CreateAssetMenu(fileName = "RemoteLevelBlueprint", menuName = "ScriptableObjects/RemoteLevelBlueprint")]
     public class RemoteLevelBlueprint : ScriptableObject
     {
         public UnitySerializedDictionary<string, RemoteLevelRecord> remoteLevelRecords;

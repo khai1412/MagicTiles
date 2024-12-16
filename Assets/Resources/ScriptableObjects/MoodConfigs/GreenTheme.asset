@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa18a71aebcf449cb45b13373f340b28, type: 3}
+  m_Name: GreenTheme
+  m_EditorClassIdentifier: 
+  ThemeName: Green
+  NameToColor:
+    keyData:
+    - Background
+    - BackgroundTopSFX
+    - BackgroundBotSFX
+    - FallingStars
+    - SpeedBoost
+    - PassingStars
+    - StarDust
+    valueData:
+    - {r: 0.4113475, g: 0.11160554, b: 0.41509432, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 0.7607843, b: 0, a: 0.21568628}
+    - {r: 1, g: 0.9098039, b: 0.4862745, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 0, b: 0.9882353, a: 0.11764706}
+  NameToSpeed:
+    keyData:
+    - FallingStars
+    - SpeedBoost
+    - PassingStars
+    - StarDust
+    valueData:
+    - 0|0|18|-12|0
+    - 9|21|0|0|0
+    - 1.5|7.5|0|0|0
+    - 3|3|3|3|3

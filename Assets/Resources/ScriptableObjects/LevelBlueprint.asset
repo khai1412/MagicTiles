@@ -12,3 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e447d353a740d3a7f5c5d56b3c9e47, type: 3}
   m_Name: LevelBlueprint
   m_EditorClassIdentifier: 
+  LevelRecords:
+    _serializedList:
+    - Key: 1
+      Value:
+        SongId: 1
+        Story: 1
+        SongName: Gia nhu
+        Artist: Chillies
+        Icon: Icon
+        RewardCard: RewardCard
+        StoryIntro: StoryIntro
+        StoryOutro: StoryOutro
+        HasObstacle: 0
+        ListThemes:
+        - BlueTheme
+        - GreenTheme
+        SongAddress: /Songs/Audio/GiaNhu.mp3
+        MidiAddress: /Songs/Midi/GiaNhu.txt

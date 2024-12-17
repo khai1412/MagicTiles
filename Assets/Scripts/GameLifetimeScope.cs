@@ -1,4 +1,6 @@
-﻿namespace GameCore.Scripts
+﻿using GameCore.Services.Implementations.ScreenManager;
+
+namespace GameCore.Scripts
 {
     using BaseDuet.Scripts.Data.BlueprintData;
     using VContainer;
@@ -20,6 +22,7 @@
         [SerializeField] private StaticSFXBlueprint   staticSFXBlueprint;
         [SerializeField] private LevelBlueprint       levelBlueprint;
         [SerializeField] private RemoteLevelBlueprint remoteLevelBlueprint;
+        [SerializeField] private UIConfigBlueprint uiConfigBlueprint;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -27,6 +30,8 @@
             BaseDuetInstaller.Configure(builder);
             GameStateMachineInstaller.Configure(builder);
 
+            builder.Register<ScreenManager>(Lifetime.Singleton);
+            
             builder.Register<UserLocalData>(Lifetime.Singleton);
             builder.Register<UserLocalDataController>(Lifetime.Singleton);
 
@@ -34,6 +39,7 @@
             builder.RegisterInstance(this.staticValueBlueprint);
             builder.RegisterInstance(this.levelBlueprint);
             builder.RegisterInstance(this.remoteLevelBlueprint);
+            builder.RegisterInstance(this.uiConfigBlueprint);
 
             builder.Register<SongManager>(Lifetime.Singleton);
             builder.Register<PreviewSongManager>(Lifetime.Singleton);

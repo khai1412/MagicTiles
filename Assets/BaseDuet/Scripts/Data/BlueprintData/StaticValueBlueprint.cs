@@ -5,20 +5,20 @@ namespace BaseDuet.Scripts.Data.BlueprintData
     [CreateAssetMenu(fileName = "StaticValueBlueprint", menuName = "ScriptableObjects/StaticValueBlueprint")]
     public class StaticValueBlueprint : ScriptableObject
     {
-        public float  BaseNoteSpeed         { get; set; }
-        public float  LowestNotePosition    { get; set; }
-        public float  HighestNotePosition   { get; set; }
-        public float  HighestTimeScale      { get; set; }
-        public float  DistancePerUnit       { get; set; }
-        public string ObstacleNoteSprite    { get; set; }
-        public float  CharacterSpeed        { get; set; }
-        public float  CharacterPositionY    { get; set; }
-        public float  CrosslinePositionYGap { get; set; }
-        public int    MaxTouchCount         { get; set; }
-        public int    MaxReviveCount        { get; set; }
-        public float  ReviveTime            { get; set; }
-        public int    InvincibleTime        { get; set; }
-        public float  FeelingLatency        { get; set; }
-        public float  SpeedUpTime        { get; set; }
+        public float BaseNoteSpeed;
+        public float LowestNotePosition;
+        public float HighestNotePosition;
+        public float HighestTimeScale;
+        public float DistancePerUnit;
+        public string ObstacleNoteSprite;
+        public float CharacterSpeed;
+        public float CharacterPositionY;
+        public float CrosslinePositionYGap;
+        public int MaxTouchCount;
+        public int MaxReviveCount;
+        public float ReviveTime;
+        public int InvincibleTime;
+        public float FeelingLatency;
+        public float SpeedUpTime;
     }
 }

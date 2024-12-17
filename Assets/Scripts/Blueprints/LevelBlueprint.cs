@@ -1,3 +1,6 @@
+using System;
+using AYellowpaper.SerializedCollections;
+
 namespace MagicTiles.Scripts.Blueprints
 {
     using System.Collections.Generic;
@@ -7,7 +10,8 @@ namespace MagicTiles.Scripts.Blueprints
     [CreateAssetMenu(fileName = "LevelBlueprint", menuName = "ScriptableObjects/LevelBlueprint")]
     public class LevelBlueprint : ScriptableObject
     {
-        public Dictionary<string, LevelRecord> LevelRecords = new Dictionary<string, LevelRecord>()
+        //public LevelRecordList LevelRecords;
+        public LevelRecordList LevelRecords = new()
             {
                 {
                     "1", new()
@@ -28,7 +32,7 @@ namespace MagicTiles.Scripts.Blueprints
                 }
             };
     }
-
+    [Serializable]
     public class LevelRecord
     {
         public string       SongId;
@@ -43,5 +47,11 @@ namespace MagicTiles.Scripts.Blueprints
         public List<string> ListThemes;
         public string       SongAddress;
         public string       MidiAddress;
+    }
+
+    [Serializable]
+    public class LevelRecordList : SerializedDictionary<string, LevelRecord>
+    {
+        
     }
 }

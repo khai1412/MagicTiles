@@ -1,7 +1,8 @@
+using GameCore.Services.Abstractions.ScreenManager;
+
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.SessionData;
-    using GameCore.Core.ScreenManager;
     using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
 
@@ -23,7 +24,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
         public async void Enter()
         {
             this.screenManager.CloseAllScreen();
-            // await this.screenManager.OpenScreen<GameOverScreenPresenter>();
+            //await this.screenManager.OpenScreen<GameOverScreenPresenter>();
 
         }
         public void          Exit()       { }

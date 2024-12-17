@@ -4,6 +4,7 @@
     "VContainer",
     "UniTask",
     "GameCore.Core",
-    "GameCore.Extensions"
+    "GameCore.Extensions",
+    "AYellowpaper.SerializedCollections"
   ]
 }

@@ -1,7 +1,8 @@
-﻿namespace MagicTiles.Scripts.StateMachines.Game.States
+﻿using GameCore.Services.Abstractions.ScreenManager;
+
+namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BasePlayerInput.InputSystem;
-    using GameCore.Core.ScreenManager;
     using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
 

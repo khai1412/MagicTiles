@@ -1,9 +1,10 @@
+using GameCore.Services.Abstractions.ScreenManager;
+
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.BlueprintData;
     using BaseDuet.Scripts.Levels;
     using GameCore.Core.AudioManager;
-    using GameCore.Core.ScreenManager;
     using GameCore.Core.StateMachine;
     using MagicTiles.Scripts.Managers;
     using MagicTiles.Scripts.MIDI;

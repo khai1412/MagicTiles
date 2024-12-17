@@ -1,6 +1,7 @@
 ﻿{
   "name": "GameCore.Extensions",
   "references": [
-    "VContainer"
+    "VContainer",
+    "AYellowpaper.SerializedCollections"
   ]
 }

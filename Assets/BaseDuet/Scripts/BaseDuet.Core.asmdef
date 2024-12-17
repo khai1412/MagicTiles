@@ -9,6 +9,7 @@
     "DOTween.Extension",
     "spine-unity",
     "spine-csharp",
-    "GameCore.Core"
+    "GameCore.Core",
+    "AYellowpaper.SerializedCollections"
   ]
 }

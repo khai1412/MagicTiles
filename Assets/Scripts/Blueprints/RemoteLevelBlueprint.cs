@@ -1,3 +1,5 @@
+using System;
+
 namespace MagicTiles.Scripts.Blueprints
 {
     using GameCore.Extensions;
@@ -9,6 +11,7 @@ namespace MagicTiles.Scripts.Blueprints
         public UnitySerializedDictionary<string, RemoteLevelRecord> remoteLevelRecords;
     }
 
+    [Serializable]
     public class RemoteLevelRecord
     {
         public string SongId() => this.Story.ToString();

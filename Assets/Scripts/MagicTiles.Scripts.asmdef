@@ -9,6 +9,7 @@
     "GoogleSheet.Core",
     "CSSynth.Core",
     "GameCore.Extensions",
-    "GameCore.Core"
+    "GameCore.Core",
+    "AYellowpaper.SerializedCollections"
   ]
 }

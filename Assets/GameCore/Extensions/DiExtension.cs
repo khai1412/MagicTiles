@@ -9,8 +9,9 @@
 
     public static class DiExtension
     {
-        private static LifetimeScope? CurrentSceneContext;
+        public static LifetimeScope? CurrentSceneContext;
 
+        [Obsolete("Obsolete")]
         public static IObjectResolver GetCurrentContainer()
         {
             if (CurrentSceneContext == null) CurrentSceneContext = Object.FindObjectOfType<LifetimeScope>();

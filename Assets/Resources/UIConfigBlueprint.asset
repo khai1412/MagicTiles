@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: UIConfigBlueprint
   m_EditorClassIdentifier: 
   uiConfigs:
-    _serializedList: []
+    _serializedList:
+    - Key: LoadingScreenView
+      Value: {fileID: 4271225677196150462, guid: ebcc20f30278c4739a745b895318ee8e, type: 3}

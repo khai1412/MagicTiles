@@ -30,7 +30,6 @@ namespace GameCore.Scripts
             BaseDuetInstaller.Configure(builder);
             GameStateMachineInstaller.Configure(builder);
 
-            builder.Register<ScreenManager>(Lifetime.Singleton);
             
             builder.Register<UserLocalData>(Lifetime.Singleton);
             builder.Register<UserLocalDataController>(Lifetime.Singleton);

@@ -41,7 +41,7 @@ namespace BaseDuet.Scripts.Data.SessionData
             get => Time.timeScale;
             set
             {
-                Time.timeScale = value;
+                Time.timeScale = 1;
                 try
                 {
                     this.audioService.SetPlayListPitch(value);
@@ -58,8 +58,9 @@ namespace BaseDuet.Scripts.Data.SessionData
             get => this.globalData.CurrentTimeScale;
             set
             {
-                this.globalData.CurrentTimeScale = Mathf.Clamp(value, 0, this.HighestTimeScale);
-                if (this.TimeScale != 0) this.TimeScale = this.globalData.CurrentTimeScale;
+                // this.globalData.CurrentTimeScale = Mathf.Clamp(value, 0, this.HighestTimeScale);
+                // if (this.TimeScale != 0) this.TimeScale = this.globalData.CurrentTimeScale;
+                this.TimeScale = 1;
             }
         }
 

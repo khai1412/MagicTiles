@@ -8,10 +8,10 @@ namespace BaseDuet.Scripts.Data.SessionData
         public float  CharacterSpeed        => this.StaticValueBlueprint.CharacterSpeed;
         public float  CharacterPositionY    => this.StaticValueBlueprint.CharacterPositionY;
         public float  CrosslinePositionYGap => this.StaticValueBlueprint.CrosslinePositionYGap;
-        public float  LowestNotePosition    => this.StaticValueBlueprint.LowestNotePosition;
+        public float  LowestNotePosition    => -3000;
         public float  HighestNotePosition   => this.StaticValueBlueprint.HighestNotePosition;
         public float  HighestTimeScale      => this.StaticValueBlueprint.HighestTimeScale;
-        public float  DistancePerUnit       => this.StaticValueBlueprint.DistancePerUnit;
+        public float  DistancePerUnit       => 50;
         public string ObstacleNoteSprite    => this.StaticValueBlueprint.ObstacleNoteSprite;
         public int    MaxReviveCount        => this.StaticValueBlueprint.MaxReviveCount;
         public float  ReviveTime            => this.StaticValueBlueprint.ReviveTime;
@@ -24,7 +24,7 @@ namespace BaseDuet.Scripts.Data.SessionData
 
         public float MovingDistance            => this.HighestNotePosition - this.LowestNotePosition;
         public float MovingDistanceToCharacter => this.HighestNotePosition - this.CharacterPositionY;
-        public float MovingDuration            => this.MovingDistance / this.NoteSpeed;
-        public float MovingDurationToCharacter => this.MovingDistanceToCharacter / this.NoteSpeed;
+        public float MovingDuration            => 2;
+        public float MovingDurationToCharacter => 1.6f;
     }
 }

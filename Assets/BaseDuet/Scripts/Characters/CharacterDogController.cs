@@ -45,8 +45,8 @@ namespace BaseDuet.Scripts.Characters
 
         public virtual void PrepareState()
         {
-            this.View.ShieldVfx.transform.gameObject.SetActive(false);
-            this.View.SpeedUpVFX.gameObject.SetActive(false);
+            // this.View.ShieldVfx.transform.gameObject.SetActive(false);
+            // this.View.SpeedUpVFX.gameObject.SetActive(false);
         }
 
         public virtual void BindSkin(int index)

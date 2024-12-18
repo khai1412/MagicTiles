@@ -66,19 +66,19 @@ namespace BaseDuet.Scripts.Notes
 
         public async void PrepareState()
         {
-            this.View.PrewarningWarningParticleSystem.gameObject.SetActive(false);
-            this.View.WarningParticleSystem.gameObject.SetActive(false);
-            this.View.MoodChangeParticleSystem.gameObject.SetActive(false);
-            this.obstacleWarningTween?.Kill();
-            this.TryCreateReviveToken();
+            // this.View.PrewarningWarningParticleSystem.gameObject.SetActive(false);
+            // this.View.WarningParticleSystem.gameObject.SetActive(false);
+            // this.View.MoodChangeParticleSystem.gameObject.SetActive(false);
+            // this.obstacleWarningTween?.Kill();
+            // this.TryCreateReviveToken();
             this.isMoving = false;
-            this.View.ItemSkin.gameObject.SetActive(true);
+            // this.View.ItemSkin.gameObject.SetActive(true);
             this.Model.IsHit                        =  false;
             this.View.ItemSkin.sprite               =  this.Model.NoteSprite;
             this.Offlane                            =  this.Model.PositionX > 0 ? this.globalDataController.Offlane : -this.globalDataController.Offlane;
             this.View.transform.localPosition       =  new((this.Model.PositionX * this.globalDataController.NoteMargin) * this.globalDataController.DistancePerUnit, this.globalDataController.HighestNotePosition, 0);
             this.View.transform.position            += new Vector3(this.Offlane, 0, 0);
-            this.View.ItemSkin.transform.localScale =  Vector3.one;
+            // this.View.ItemSkin.transform.localScale =  Vector3.one;
         }
 
         private void TryCreateReviveToken()
@@ -109,7 +109,7 @@ namespace BaseDuet.Scripts.Notes
 
         private void StartDoMove()
         {
-            this.moveTween = this.View.transform.DOMoveY(this.globalDataController.LowestNotePosition, this.globalDataController.NoteSpeed, false)
+            this.moveTween = this.View.transform.DOMoveY(this.globalDataController.LowestNotePosition, 1000, false)
                 .OnStart(() =>
                 {
                     this.SetupView();

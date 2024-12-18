@@ -38,6 +38,24 @@ namespace BaseDuet.Scripts.Levels
         private bool                    isFirstHitNote;
         private CancellationTokenSource cancellationTokenSource;
 
+
+        private int lastTest = -1;
+        private void Update()
+        {
+
+            if(this.lastTest == this.View.test) return;
+            this.lastTest = this.View.test;
+            switch (this.View.test)
+            {
+                case 0 :
+                    this.StartState();
+                    break;
+                case 1 :
+                    this.EndState();
+                    break;
+            }
+        }
+
         public void BindData(LevelModel model, LevelView view)
         {
             this.Model = model;
@@ -112,9 +130,9 @@ namespace BaseDuet.Scripts.Levels
         {
             this.isFirstHitNote          = false;
             this.cancellationTokenSource = new();
-            this.View.FinalTutorialTimeline.gameObject.SetActive(false);
-            this.View.TutorialTimeline.gameObject.SetActive(this.globalDataController.IsGameplayTutorial);
-            this.View.ObstacleTimeline.gameObject.SetActive(false);
+            // this.View.FinalTutorialTimeline.gameObject.SetActive(false);
+            // this.View.TutorialTimeline.gameObject.SetActive(this.globalDataController.IsGameplayTutorial);
+            // this.View.ObstacleTimeline.gameObject.SetActive(false);
             if (this.View.SpeedUpVFX != null) this.View.SpeedUpVFX.SetActive(false);
             if (this.View.SplitLine != null) this.View.SplitLine.SetActive(true);
             this.View.DogLine.gameObject.SetActive(true);

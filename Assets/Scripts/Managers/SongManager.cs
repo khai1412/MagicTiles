@@ -179,7 +179,6 @@ namespace MagicTiles.Scripts.Managers
 
             var levelModel = new LevelModel(models, null,
                 null, moodThemes,
-                new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY),
                 new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY));
             this.CurrentLevelModel = levelModel;
             this.levelController.BindData(this.CurrentLevelModel, null);

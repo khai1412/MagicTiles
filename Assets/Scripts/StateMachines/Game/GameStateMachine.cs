@@ -25,7 +25,7 @@ namespace MagicTiles.Scripts.StateMachines.Game
 
         public void Start()
         {
-            this.TransitionTo<GamePrepareState>();
+            this.TransitionTo<GameHomeState>();
         }
     }
 }

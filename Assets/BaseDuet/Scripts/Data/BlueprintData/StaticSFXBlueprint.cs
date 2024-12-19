@@ -24,8 +24,5 @@ namespace BaseDuet.Scripts.Data.BlueprintData
         public string FoodLong;
         public string FoodStar;
         public string Obstacle;
-
-        public static StaticSFXBlueprint Instance;
-        public StaticSFXBlueprint() { Instance = this; }
     }
 }

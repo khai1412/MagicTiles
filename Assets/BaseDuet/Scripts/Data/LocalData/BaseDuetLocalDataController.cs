@@ -8,14 +8,18 @@ namespace BaseDuet.Scripts.Data.LocalData
     public class BaseDuetLocalDataController : ILocalDataController
     {
         private readonly BaseDuetLocalData baseDuetLocalData;
-        public BaseDuetLocalDataController(BaseDuetLocalData baseDuetLocalData) { this.baseDuetLocalData = baseDuetLocalData; }
+
+        public BaseDuetLocalDataController(BaseDuetLocalData baseDuetLocalData)
+        {
+            this.baseDuetLocalData = baseDuetLocalData;
+        }
 
         #region Properties
 
         public float Sensitivity        { get => this.baseDuetLocalData.Sensitivity; }
         public float Latency            { get => this.baseDuetLocalData.Latency; }
         public float Offlane            { get => this.baseDuetLocalData.Offlane; }
-        public float NoteMargin            { get => this.baseDuetLocalData.NoteMargin; }
+        public float NoteMargin         { get => this.baseDuetLocalData.NoteMargin; }
         public bool  IsGameplayTutorial { get => this.baseDuetLocalData.IsGameplayTutorial; set => this.baseDuetLocalData.IsGameplayTutorial = value; }
         public bool  IsCardTutorial     { get => this.baseDuetLocalData.IsCardTutorial;     set => this.baseDuetLocalData.IsCardTutorial = value; }
         public bool  IsShopTutorial     { get => this.baseDuetLocalData.IsShopTutorial;     set => this.baseDuetLocalData.IsShopTutorial = value; }
@@ -29,11 +33,14 @@ namespace BaseDuet.Scripts.Data.LocalData
 
         public void FinishSong(string songId, BaseDuetLocalDataRecord record)
         {
-            if (!this.baseDuetLocalData.LevelToRecord.TryGetValue(songId, out _)) this.baseDuetLocalData.LevelToRecord.Add(songId, record);
-            else this.UpdateSong(songId, record);
+            if (!this.baseDuetLocalData.LevelToRecord.TryGetValue(songId, out _))
+                this.baseDuetLocalData.LevelToRecord.Add(songId, record);
+            else
+                this.UpdateSong(songId, record);
         }
 
         public bool CheckFinishSong(string songName) => this.baseDuetLocalData.LevelToRecord.ContainsKey(songName);
+
         public void UpdateSong(string songId, BaseDuetLocalDataRecord record)
         {
             if (this.baseDuetLocalData.LevelToRecord[songId].HighScore > record.HighScore) return;
@@ -44,13 +51,16 @@ namespace BaseDuet.Scripts.Data.LocalData
             this.baseDuetLocalData.LevelToRecord[songId].FullPerfect = record.FullPerfect || this.baseDuetLocalData.LevelToRecord[songId].FullPerfect;
             this.baseDuetLocalData.LevelToRecord[songId].MaxAccuracy = Mathf.Max(this.baseDuetLocalData.LevelToRecord[songId].MaxAccuracy, record.MaxAccuracy);
         }
+
         public BaseDuetLocalDataRecord GetResultRecord(string songName)
         {
             BaseDuetLocalDataRecord record;
             this.baseDuetLocalData.LevelToRecord.TryGetValue(songName, out record);
             return record;
         }
+
         public Dictionary<string, BaseDuetLocalDataRecord> GetAllResultRecord() => this.baseDuetLocalData.LevelToRecord;
+
         public void ClaimCard(string songName)
         {
             BaseDuetLocalDataRecord record;
@@ -59,8 +69,9 @@ namespace BaseDuet.Scripts.Data.LocalData
                 record.ClaimedReward = true;
             }
         }
+
         public void SetSensitivity(float value) => this.baseDuetLocalData.Sensitivity = value;
-        public void SetMargin(float value) => this.baseDuetLocalData.NoteMargin = value;
+        public void SetMargin(float      value) => this.baseDuetLocalData.NoteMargin = value;
         public void SetLatency(float     value) => this.baseDuetLocalData.Latency = value;
         public void SetOfflane(float     value) => this.baseDuetLocalData.Offlane = value;
         public void FinishTutorial()            => this.baseDuetLocalData.IsGameplayTutorial = false;

@@ -19,7 +19,6 @@ namespace BaseDuet.Scripts.Data.LocalData
         public bool                                        IsShopTutorial     { get; set; } = false;
         public bool                                        IsObstacleTutorial { get; set; } = false;
         public bool                                        IsAlbumTutorial    { get; set; } = false;
-
         public Type                                        ControllerType     { get; }
     }
 

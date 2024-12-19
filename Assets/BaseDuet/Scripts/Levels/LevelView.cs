@@ -28,7 +28,5 @@ namespace BaseDuet.Scripts.Levels
         [field: SerializeField] public PlayableDirector FinalTutorialTimeline    { get; private set; }
         [field: SerializeField] public GameObject       SpeedUpVFX               { get; private set; }
 
-        [SerializeField] public int test = -1;
-
     }
 }

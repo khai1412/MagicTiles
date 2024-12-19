@@ -18,15 +18,12 @@ MonoBehaviour:
       Value:
         SongId: 1
         Story: 1
-        SongName: Gia nhu
+        SongName: Interstella
         Artist: Chillies
         Icon: Icon
-        RewardCard: RewardCard
-        StoryIntro: StoryIntro
-        StoryOutro: StoryOutro
         HasObstacle: 0
         ListThemes:
         - BlueTheme
         - GreenTheme
-        SongAddress: /Songs/Audio/GiaNhu.mp3
-        MidiAddress: /Songs/Midi/GiaNhu.txt
+        SongAddress: /Songs/Audio/Interstella
+        MidiAddress: /Songs/Midi/Interstella

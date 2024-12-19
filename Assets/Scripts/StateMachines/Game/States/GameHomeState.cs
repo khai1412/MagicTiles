@@ -27,17 +27,10 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
 
         public async void Enter()
         {
-            this.TrySetDefaultDogCategory();
             this.songManager.SelectDefaultSong().Forget();
             this.playerInputManager.SetActive(false);
             this.screenManager.CloseAllScreen();
             // this.screenManager.OpenScreen<HomeScreenPresenter>().Forget();
-        }
-
-        private void TrySetDefaultDogCategory()
-        {
-            // if (string.IsNullOrEmpty(this.uiTemplateInventoryDataController.GetCurrentItemSelected("Dog1"))) this.uiTemplateInventoryDataController.UpdateCurrentSelectedItem("Dog1", this.uiTemplateInventoryDataController.GetCurrentItemSelected("Dog"));
-            // if (string.IsNullOrEmpty(this.uiTemplateInventoryDataController.GetCurrentItemSelected("Dog2"))) this.uiTemplateInventoryDataController.UpdateCurrentSelectedItem("Dog2", this.uiTemplateInventoryDataController.GetCurrentItemSelected("Dog"));
         }
 
         public void          Exit()       { }

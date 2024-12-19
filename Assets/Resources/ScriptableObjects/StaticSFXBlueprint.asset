@@ -12,3 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fad4eb4b4d423493aa3535964b7112, type: 3}
   m_Name: StaticSFXBlueprint
   m_EditorClassIdentifier: 
+  BtnBack: BACK_BTN
+  MusicSplash: MUSIC_SPLASH
+  OptionShop: OPTIONS_SHOP
+  PlaySong: PLAY_SONG
+  PurchaseShop: PURCHASE_SHOP_ITEM
+  ScrollShopItem: SCROLL_SHOP_ITEM
+  BtnSelect: SELECT_BTN
+  BtnSelectShop: SELECT_FOOD_SHOP_ITEM
+  BtnSelectFood: SELECT_SHOP_ITEM
+  SlideShop: SLIDE_SHOP_ITEM
+  SlideBackShop: SLIDE_BACK_SHOP_ITEM
+  SlideStuckShop: SLIDE_STUCK_SHOP_ITEM
+  Food: FOOD
+  FoodBig: FOODBIG
+  FoodLong: FOODLONG
+  FoodStar: FOODSTAR
+  Obstacle: OBSTACLE

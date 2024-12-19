@@ -134,6 +134,11 @@ namespace MagicTiles.Scripts.Managers
             this.currentDuetDuetComposedLevelData   = duetComposedLevelData;
         }
 
+        public void SelectSong(string songId)
+        {
+            this.SelectSong(this.GetAllLevelData()[songId]);
+        }
+
         public async UniTask SelectDefaultSong(bool playSong = true)
         {
             var levelData = this.GetAllLevelData().OrderBy(x => x.Value.RemoteLevelRecord.Story).FirstOrDefault(x => !x.Value.DogDuetLevelData.HasPassed).Value;
@@ -152,6 +157,12 @@ namespace MagicTiles.Scripts.Managers
             this.PlayCurrentSong(ePlayType, eUnlockType);
         }
 
+        public void PlaySong(string songId)
+        {
+            this.SelectSong(songId);
+            this.PlayCurrentSong();
+        }
+
         public void PlayCurrentSong(EPlayType ePlayType = EPlayType.Home, EUnlockType eUnlockType = EUnlockType.Default, bool redirectToPrepareState = true)
         {
             this.LastPlayType = this.globalDataController.IsGameplayTutorial ? EPlayType.Tutorial : ePlayType;
@@ -166,20 +177,14 @@ namespace MagicTiles.Scripts.Managers
 
         public async UniTask LoadSong(byte[] midiContent, AudioClip audioClip, int seed = 0)
         {
-            var models = await this.midiGenerator.GetNoteModels(midiContent, seed, "Easy",
-                false);
+            var songModel = this.GetAllLevelData()[this.globalDataController.CurrentSongId];
+            var models    = await this.midiGenerator.GetNoteModels(midiContent, seed, songModel.RemoteLevelRecord.difficultyLevel, songModel.LevelRecord.HasObstacle);
             this.globalDataController.TotalNote = models.Count(x => !x.IsObstacle && x.ELongNote is not (ELongNote.Body or ELongNote.Tail));
             Debug.Log($"Total note: {this.globalDataController.TotalNote}");
             this.globalDataController.TotalObstacle = models.Count(x => x.IsObstacle);
-            var moodThemes = new List<string>()
-            {
-                "ScriptableObjects/MoodConfigs/BlueTheme",
-                "ScriptableObjects/MoodConfigs/GreenTheme",
-            }.Select(x => this.gameAssets.Load<MoodThemeConfig>(x)).ToList();
+            var moodThemes = songModel.LevelRecord.ListThemes.Select(x => this.gameAssets.Load<MoodThemeConfig>(x)).ToList();
 
-            var levelModel = new LevelModel(models, null,
-                null, moodThemes,
-                new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY));
+            var levelModel = new LevelModel(models, moodThemes, new CharacterModel(this.globalDataController.CharacterSpeed, this.globalDataController.CharacterPositionY));
             this.CurrentLevelModel = levelModel;
             this.levelController.BindData(this.CurrentLevelModel, null);
             await this.levelController.PrepareMusic(audioClip);
@@ -199,11 +204,6 @@ namespace MagicTiles.Scripts.Managers
         public Dictionary<string, DuetComposedLevelData> GetAllLevelData()
         {
             return this.userLocalDataController.GetDictionaryLeveData(this.globalDataController);
-        }
-
-        public DuetComposedLevelData GetLevelRecordByCard(string card)
-        {
-            return this.userLocalDataController.GetDictionaryLeveData(this.globalDataController).FirstOrDefault(x => x.Value.LevelRecord.RewardCard == card).Value;
         }
 
         public DuetComposedLevelData GetNextSong()

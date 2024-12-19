@@ -38,24 +38,6 @@ namespace BaseDuet.Scripts.Levels
         private bool                    isFirstHitNote;
         private CancellationTokenSource cancellationTokenSource;
 
-
-        private int lastTest = -1;
-        private void Update()
-        {
-
-            if(this.lastTest == this.View.test) return;
-            this.lastTest = this.View.test;
-            switch (this.View.test)
-            {
-                case 0 :
-                    this.StartState();
-                    break;
-                case 1 :
-                    this.EndState();
-                    break;
-            }
-        }
-
         public void BindData(LevelModel model, LevelView view)
         {
             this.Model = model;

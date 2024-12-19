@@ -8,11 +8,11 @@ namespace BaseDuet.Scripts.Data.SessionData
     {
         public float CurrentTimeScale { get; set; }
 
-        public string CurrentSongId              { get; set; }
-        public float  CurrentSongScoreMultiplier { get; set; }
-        public float  CurrentNoteSpeed { get; set; }
-        public ESongSegment  CurrentSongSegment { get; set; }
-        public string  CurrentSongDifficulty { get; set; }
+        public string       CurrentSongId              { get; set; }
+        public float        CurrentSongScoreMultiplier { get; set; }
+        public float        CurrentNoteSpeed           { get; set; }
+        public ESongSegment CurrentSongSegment         { get; set; }
+        public string       CurrentSongDifficulty      { get; set; }
 
         public int CurrentHealth { get; set; }
         public int MaxHealth     { get; set; }

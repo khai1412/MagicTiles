@@ -12,3 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a3aa7f806f4a108cb295148da9670e, type: 3}
   m_Name: StaticValueBlueprint
   m_EditorClassIdentifier: 
+  BaseNoteSpeed: 5.5
+  LowestNotePosition: -4
+  HighestNotePosition: 10
+  HighestTimeScale: 3
+  DistancePerUnit: 100
+  ObstacleNoteSprite: ObstacleNote
+  CharacterSpeed: 1.5
+  CharacterPositionY: -0.5
+  CrosslinePositionYGap: 0.65
+  MaxTouchCount: 2
+  MaxReviveCount: 5
+  ReviveTime: 1
+  InvincibleTime: 4
+  FeelingLatency: 0.7
+  SpeedUpTime: 2

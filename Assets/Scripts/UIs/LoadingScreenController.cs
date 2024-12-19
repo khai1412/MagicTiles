@@ -1,10 +1,9 @@
-using System;
-using GameCore.Extensions;
-using GameCore.Services.Implementations.ScreenManager;
-using UnityEngine;
-
 namespace UIs
 {
+    using GameCore.Extensions;
+    using GameCore.Services.Implementations.ScreenManager;
+    using UnityEngine;
+
     public class LoadingScreenController : MonoBehaviour
     {
         private ScreenManager _screenManager;

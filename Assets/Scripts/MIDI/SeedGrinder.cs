@@ -1,18 +1,15 @@
 #if UNITY_EDITOR
 namespace MagicTiles.Scripts.MIDI
 {
-    using Cysharp.Threading.Tasks;
-    using MagicTiles.Scripts.Blueprints;
     using UnityEngine;
-
 
     public class SeedGrinder : MonoBehaviour
     {
         [SerializeField] private string LevelId;
         [SerializeField] private int    StartSeed;
-        [SerializeField] private float  NeededDistance = 0.1f;
-        [SerializeField] private int    count          = 0;
-        [SerializeField] private int    checkInterval  = 100;
+        [SerializeField] private float  NeededDistance  = 0.1f;
+        [SerializeField] private int    count           = 0;
+        [SerializeField] private int    checkInterval   = 100;
         [SerializeField] private int    checkCount1Time = 1000;
 
         // [Button]

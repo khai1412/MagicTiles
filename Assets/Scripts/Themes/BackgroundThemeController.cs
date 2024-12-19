@@ -6,6 +6,5 @@ namespace MagicTiles.Scripts.Themes
     {
         [SerializeField] private ParticleSystem starFallParticleSystem;
         [SerializeField] private ParticleSystem speedLineParticleSystem;
-        
     }
 }

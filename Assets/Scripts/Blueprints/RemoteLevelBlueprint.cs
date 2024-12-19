@@ -1,7 +1,6 @@
-using System;
-
 namespace MagicTiles.Scripts.Blueprints
 {
+    using System;
     using GameCore.Extensions;
     using UnityEngine;
 
@@ -14,7 +13,6 @@ namespace MagicTiles.Scripts.Blueprints
     [Serializable]
     public class RemoteLevelRecord
     {
-        public string SongId() => this.Story.ToString();
         public int    Story;
         public string songName;
         public string artistName;
@@ -26,5 +24,10 @@ namespace MagicTiles.Scripts.Blueprints
         public string unlockType;
         public string difficultyLevel;
         public string backgroundAudioUrl;
+
+        public string SongId()
+        {
+            return this.Story.ToString();
+        }
     }
 }

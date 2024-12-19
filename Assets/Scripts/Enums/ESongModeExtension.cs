@@ -10,7 +10,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 10,
                 ESongMode.Hard    => 15,
                 ESongMode.Extreme => 20,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -22,7 +22,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 5,
                 ESongMode.Hard    => 8,
                 ESongMode.Extreme => 10,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -34,7 +34,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 20,
                 ESongMode.Hard    => 30,
                 ESongMode.Extreme => 40,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -46,7 +46,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 0.5f,
                 ESongMode.Hard    => 0.4f,
                 ESongMode.Extreme => 0.3f,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -58,7 +58,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 0.7f,
                 ESongMode.Hard    => 0.6f,
                 ESongMode.Extreme => 0.5f,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -70,7 +70,7 @@ namespace MagicTiles.Scripts.Models
                 ESongMode.Normal  => 0.9f,
                 ESongMode.Hard    => 0.8f,
                 ESongMode.Extreme => 0.7f,
-                _                 => 0
+                _                 => 0,
             };
         }
 
@@ -81,7 +81,7 @@ namespace MagicTiles.Scripts.Models
                 1 => songMode.Get1StarScorePercentage(),
                 2 => songMode.Get2StarScorePercentage(),
                 3 => songMode.Get3StarScorePercentage(),
-                _ => 0
+                _ => 0,
             };
         }
     }

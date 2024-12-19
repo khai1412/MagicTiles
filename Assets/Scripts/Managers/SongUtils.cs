@@ -8,9 +8,9 @@ namespace MagicTiles.Scripts.Managers
 
     public class SongUtils
     {
-        private readonly WebRequestUtils webRequestUtils;
-        private readonly SongManager     songManager;
         private readonly IAssetManager   assetManager;
+        private readonly SongManager     songManager;
+        private readonly WebRequestUtils webRequestUtils;
 
         public SongUtils(WebRequestUtils webRequestUtils, SongManager songManager, IAssetManager assetManager)
         {

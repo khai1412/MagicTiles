@@ -1,17 +1,16 @@
-using GameCore.Services.Abstractions.ScreenManager;
-
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BasePlayerInput.InputSystem;
     using Cysharp.Threading.Tasks;
     using GameCore.Core.StateMachine;
+    using GameCore.Services.Abstractions.ScreenManager;
     using MagicTiles.Scripts.Managers;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
 
     public class GameHomeState : IGameState
     {
-        private readonly IScreenManager     screenManager;
         private readonly PlayerInputManager playerInputManager;
+        private readonly IScreenManager     screenManager;
         private readonly SongManager        songManager;
 
         public GameHomeState(

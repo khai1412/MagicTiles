@@ -5,29 +5,37 @@ namespace MagicTiles.Scripts.Helpers
 
     public class TimeHelper
     {
-        #region Inject
+        private readonly List<int> ListWatchAdTime = new();
+        private          float     EndTime;
 
-        #endregion
+        private float StartTime;
 
-        private float     StartTime;
-        private float     EndTime;
-        private List<int> ListWatchAdTime = new();
         public void StartSong()
         {
             this.ListWatchAdTime.Clear();
             this.StartTime = Time.time;
         }
-        public void EndSong()         { this.EndTime = Time.time; }
-        public void WatchAd(int time) { this.ListWatchAdTime.Add(time); }
+
+        public void EndSong()
+        {
+            this.EndTime = Time.time;
+        }
+
+        public void WatchAd(int time)
+        {
+            this.ListWatchAdTime.Add(time);
+        }
+
         public float GetAllPlayTime()
         {
-            float totalPlayTime = this.EndTime - this.StartTime;
-            foreach (var adTime in this.ListWatchAdTime)
-            {
-                totalPlayTime -= adTime;
-            }
+            var totalPlayTime                                          = this.EndTime - this.StartTime;
+            foreach (var adTime in this.ListWatchAdTime) totalPlayTime -= adTime;
 
             return totalPlayTime;
         }
+
+        #region Inject
+
+        #endregion
     }
 }

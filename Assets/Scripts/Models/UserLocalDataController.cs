@@ -3,15 +3,16 @@ namespace MagicTiles.Scripts.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using BaseDuet.Scripts.Data.SessionData;using GameCore.Services.Abstractions.LocalData;
+    using BaseDuet.Scripts.Data.SessionData;
+    using GameCore.Services.Abstractions.LocalData;
     using MagicTiles.Scripts.Blueprints;
     using VContainer.Unity;
 
     public class UserLocalDataController : ILocalDataController, IInitializable
     {
-        private readonly UserLocalData        userLocalData;
         private readonly LevelBlueprint       levelBlueprint;
         private readonly RemoteLevelBlueprint remoteLevelBlueprint;
+        private readonly UserLocalData        userLocalData;
 
         public UserLocalDataController(
             UserLocalData        userLocalData,
@@ -24,18 +25,17 @@ namespace MagicTiles.Scripts.Models
             this.remoteLevelBlueprint = remoteLevelBlueprint;
         }
 
-        public bool IsFirstOpen  { get => this.userLocalData.IsFirstOpen; set => this.userLocalData.IsFirstOpen = value; }
-        public void Initialize() { }
+        public bool IsFirstOpen { get => this.userLocalData.IsFirstOpen; set => this.userLocalData.IsFirstOpen = value; }
+
+        public int  GetDictionaryLevelDataCount => this.userLocalData.DictLevelData.Count;
+        public void Initialize()                { }
 
         public void InitListLevelData(Dictionary<string, LevelRecord> list)
         {
             foreach (var (songId, levelRecord) in list)
             {
-                var isNew = this.userLocalData.DictLevelData.TryAdd(songId, new() { Story = levelRecord.Story });
-                if (isNew)
-                {
-                    this.userLocalData.DictLevelData[songId].LevelStatus = LevelStatus.Locked;
-                }
+                var isNew                                                       = this.userLocalData.DictLevelData.TryAdd(songId, new() { Story = levelRecord.Story });
+                if (isNew) this.userLocalData.DictLevelData[songId].LevelStatus = LevelStatus.Locked;
             }
 
             this.UnlockFirstLevel();
@@ -45,11 +45,8 @@ namespace MagicTiles.Scripts.Models
         {
             foreach (var (songId, remoteLevelRecord) in list)
             {
-                var isNew = this.userLocalData.DictLevelData.TryAdd(songId, new() { Story = remoteLevelRecord.Story });
-                if (isNew)
-                {
-                    this.userLocalData.DictLevelData[songId].LevelStatus = LevelStatus.Locked;
-                }
+                var isNew                                                       = this.userLocalData.DictLevelData.TryAdd(songId, new() { Story = remoteLevelRecord.Story });
+                if (isNew) this.userLocalData.DictLevelData[songId].LevelStatus = LevelStatus.Locked;
             }
 
             this.UnlockFirstLevel();
@@ -62,16 +59,11 @@ namespace MagicTiles.Scripts.Models
 
         public int GetAccumulatedCount(string eventName)
         {
-            if (this.userLocalData.AccumulatedDictionary.ContainsKey(eventName))
-            {
-                return ++this.userLocalData.AccumulatedDictionary[eventName];
-            }
+            if (this.userLocalData.AccumulatedDictionary.ContainsKey(eventName)) return ++this.userLocalData.AccumulatedDictionary[eventName];
 
             this.userLocalData.AccumulatedDictionary.Add(eventName, 0);
             return 0;
         }
-
-        public int GetDictionaryLevelDataCount => this.userLocalData.DictLevelData.Count;
 
         public Dictionary<string, DuetComposedLevelData> GetDictionaryLeveData(GlobalDataController gdc)
         {
@@ -112,10 +104,7 @@ namespace MagicTiles.Scripts.Models
 
         public void FinishSong(string songId)
         {
-            if (this.userLocalData.DictLevelData.TryGetValue(songId, out var levelData))
-            {
-                levelData.HasPassed = true;
-            }
+            if (this.userLocalData.DictLevelData.TryGetValue(songId, out var levelData)) levelData.HasPassed = true;
         }
     }
 }

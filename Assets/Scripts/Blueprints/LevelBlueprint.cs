@@ -1,9 +1,8 @@
-using System;
-using AYellowpaper.SerializedCollections;
-
 namespace MagicTiles.Scripts.Blueprints
 {
+    using System;
     using System.Collections.Generic;
+    using AYellowpaper.SerializedCollections;
     using UnityEngine;
 
     [CreateAssetMenu(fileName = "LevelBlueprint", menuName = "ScriptableObjects/LevelBlueprint")]
@@ -28,6 +27,5 @@ namespace MagicTiles.Scripts.Blueprints
 
     [Serializable]
     public class LevelRecordList : SerializedDictionary<string, LevelRecord>
-    {
-    }
+    { }
 }

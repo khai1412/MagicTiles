@@ -11,7 +11,7 @@ namespace MagicTiles.Scripts.Utils
     {
         public async UniTask DownloadCSVRawString(string url, Action<string> OnWebRequestSuccess = null, Action<string> OnWebRequestFail = null)
         {
-            using (UnityWebRequest www = UnityWebRequest.Get(url))
+            using (var www = UnityWebRequest.Get(url))
             {
                 Debug.Log($"Get from url: {url}");
                 await www.SendWebRequest();
@@ -22,7 +22,7 @@ namespace MagicTiles.Scripts.Utils
                     Debug.LogError(www.error);
                 }
 
-                string tsvRawString = www.downloadHandler.text;
+                var tsvRawString = www.downloadHandler.text;
                 OnWebRequestSuccess?.Invoke(tsvRawString);
             }
         }
@@ -32,8 +32,8 @@ namespace MagicTiles.Scripts.Utils
             Debug.Log($"Download audio from url: {url}");
             #if FETCH_FROM_DRIVE
             using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url.ViewUrlToDownloadUrl(), AudioType.MPEG))
-                #else
-                        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+            #else
+            using (var www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
                 #endif
             {
                 await www.SendWebRequest();
@@ -47,13 +47,14 @@ namespace MagicTiles.Scripts.Utils
                 return DownloadHandlerAudioClip.GetContent(www);
             }
         }
+
         public async UniTask<AudioClip> DownloadAudio(string url, CancellationToken token)
         {
             Debug.Log($"Download audio from url: {url}");
             #if FETCH_FROM_DRIVE
             using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url.ViewUrlToDownloadUrl(), AudioType.MPEG))
-                #else
-                        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+            #else
+            using (var www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
                 #endif
             {
                 await www.SendWebRequest().WithCancellation(token);
@@ -67,20 +68,18 @@ namespace MagicTiles.Scripts.Utils
                 return DownloadHandlerAudioClip.GetContent(www);
             }
         }
+
         public async UniTask<byte[]> DownloadMidiFile(string url)
         {
             #if FETCH_FROM_DRIVE
             using (UnityWebRequest www = UnityWebRequest.Get(url.ViewUrlToDownloadUrl()))
-                #else
-            using (UnityWebRequest www = UnityWebRequest.Get(url))
+            #else
+            using (var www = UnityWebRequest.Get(url))
                 #endif
             {
                 await www.SendWebRequest();
 
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError(www.error);
-                }
+                if (www.result != UnityWebRequest.Result.Success) Debug.LogError(www.error);
 
                 return www.downloadHandler.data;
             }
@@ -90,7 +89,7 @@ namespace MagicTiles.Scripts.Utils
         {
             try
             {
-                using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url.SpriteUrlToDownloadUrl()))
+                using (var request = UnityWebRequestTexture.GetTexture(url.SpriteUrlToDownloadUrl()))
                 {
                     await request.SendWebRequest();
 
@@ -99,12 +98,12 @@ namespace MagicTiles.Scripts.Utils
                         Debug.LogError($"Error downloading image: {request.error}");
                         return null;
                     }
-                    Texture2D texture = DownloadHandlerTexture.GetContent(request);
+                    var texture = DownloadHandlerTexture.GetContent(request);
 
-                    Sprite sprite = Sprite.Create(
+                    var sprite = Sprite.Create(
                         texture,
-                        new Rect(0, 0, texture.width, texture.height),
-                        new Vector2(0.5f, 0.5f)
+                        new(0, 0, texture.width, texture.height),
+                        new(0.5f, 0.5f)
                     );
 
                     return sprite;

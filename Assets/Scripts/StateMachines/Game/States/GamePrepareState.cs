@@ -1,25 +1,23 @@
-using GameCore.Services.Abstractions.ScreenManager;
-
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
-    using BaseDuet.Scripts.Data.BlueprintData;
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Levels;
     using GameCore.Core.AudioManager;
     using GameCore.Core.StateMachine;
+    using GameCore.Services.Abstractions.ScreenManager;
     using MagicTiles.Scripts.Managers;
     using MagicTiles.Scripts.MIDI;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
 
     public class GamePrepareState : IGameState
     {
-        private readonly IScreenManager       screenManager;
         private readonly IAudioManager        audioService;
-        private readonly SongManager          songManager;
-        private readonly MidiGenerator        midiGenerator;
-        private readonly SongUtils            songUtils;
-        private readonly LevelController      levelController;
         private readonly GlobalDataController globalDataController;
+        private readonly LevelController      levelController;
+        private readonly MidiGenerator        midiGenerator;
+        private readonly IScreenManager       screenManager;
+        private readonly SongManager          songManager;
+        private readonly SongUtils            songUtils;
 
         public GamePrepareState(
             IScreenManager       screenManager,
@@ -45,7 +43,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
             var levelModel  = this.songManager.GetAllLevelData()[this.globalDataController.CurrentSongId];
             var midiContent = this.songUtils.GetSongMidiContent(levelModel.LevelRecord.MidiAddress).bytes;
             var audioClip   = this.songUtils.GetSongAudio(levelModel.LevelRecord.SongAddress);
-            await this.songManager.LoadSong(midiContent, audioClip, 0);
+            await this.songManager.LoadSong(midiContent, audioClip);
             this.levelController.PrepareState();
         }
 

@@ -1,25 +1,25 @@
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using GameCore.Services.Implementations.LocalData;
-using GameCore.Services.Implementations.ScreenManager;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
 namespace UIs
 {
+    using Cysharp.Threading.Tasks;
+    using DG.Tweening;
+    using GameCore.Services.Implementations.LocalData;
+    using GameCore.Services.Implementations.ScreenManager;
+    using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
+
     public class LoadingScreenView : BaseScreenView
     {
         public Slider loadingBar;
-
     }
+
     [ScreenInfo(nameof(LoadingScreenView))]
-    public class LoadingScreenPresenter: BaseScreenPresenter<LoadingScreenView>
+    public class LoadingScreenPresenter : BaseScreenPresenter<LoadingScreenView>
     {
         private readonly LocalDataHandler _localDataHandler;
 
         public LoadingScreenPresenter(UIConfigBlueprint uiConfigBlueprint, LocalDataHandler localDataHandler) : base(uiConfigBlueprint)
         {
-            _localDataHandler = localDataHandler;
+            this._localDataHandler = localDataHandler;
         }
 
         public override UniTask BindData()
@@ -32,10 +32,10 @@ namespace UIs
         private void FakeLoading()
         {
             DOTween.To(
-                getter: () => this.View.loadingBar.value,
-                setter: value => this.View.loadingBar.value= value,
-                endValue: 1,
-                duration: 0.7f
+                () => this.View.loadingBar.value,
+                value => this.View.loadingBar.value = value,
+                1,
+                0.7f
             ).onComplete += () =>
             {
                 SceneManager.LoadScene("MainScene");

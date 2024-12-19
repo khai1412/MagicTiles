@@ -6,13 +6,13 @@ namespace MagicTiles.Scripts.Models
         Dog1,
         Dog2,
         Note,
-        Card
+        Card,
     }
 
     public enum ESettingScreen
     {
         Pause,
-        Setting
+        Setting,
     }
 
     public enum ESongMode
@@ -20,7 +20,7 @@ namespace MagicTiles.Scripts.Models
         Easy,
         Normal,
         Hard,
-        Extreme
+        Extreme,
     }
 
     public enum LevelStatus
@@ -36,14 +36,12 @@ namespace MagicTiles.Scripts.Models
         Discover,
         Setting,
         Tutorial,
-        Recommend
+        Recommend,
     }
 
     public enum EUnlockType
     {
         Default,
-        Ads
+        Ads,
     }
-
-   
 }

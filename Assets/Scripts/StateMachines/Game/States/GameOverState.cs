@@ -1,15 +1,14 @@
-using GameCore.Services.Abstractions.ScreenManager;
-
 namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.SessionData;
     using GameCore.Core.StateMachine;
+    using GameCore.Services.Abstractions.ScreenManager;
     using MagicTiles.Scripts.StateMachines.Game.Interfaces;
 
     public class GameOverState : IGameState
     {
-        private readonly IScreenManager        screenManager;
         private readonly GlobalDataController globalDataController;
+        private readonly IScreenManager       screenManager;
 
         #region Inject
 
@@ -25,8 +24,8 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
         {
             this.screenManager.CloseAllScreen();
             //await this.screenManager.OpenScreen<GameOverScreenPresenter>();
-
         }
+
         public void          Exit()       { }
         public IStateMachine StateMachine { get; set; }
     }

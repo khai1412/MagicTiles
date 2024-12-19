@@ -1,36 +1,20 @@
-using System;
-using System.Collections.Generic;
-using CSSynth.Midi;
-using UnityEngine;
-
 namespace MagicTiles.Scripts.MIDI
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Notes;
+    using CSSynth.Midi;
     using Cysharp.Threading.Tasks;
     using GameCore.Core.AssetsManager;
     using MagicTiles.Scripts.Models;
     using MagicTiles.Scripts.Models.Static;
+    using UnityEngine;
     using Random = UnityEngine.Random;
 
     public class MidiGenerator
     {
-        private readonly GlobalDataController globalDataController;
-        private readonly IAssetManager        assetManager;
-        private          MidiTrack            mainTrack;
-        private          MidiTrack            supportTrack;
-        private          MidiTrack            motifTrack;
-        private          MidiTrack            relationTrack;
-        private          MidiTrack            obstacleTrack;
-
-        private Dictionary<int, float> pulseTempo = new Dictionary<int, float>();
-
-        private static readonly string[] MajorKey = new[] { "Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#" };
-        private static readonly string[] MinorKey = new[] { "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#" };
-
-        private static readonly float[] PossiblePosition = new[] { -3.6f, -1.2f, 1.2f, 3.6f };
-
         private const string TRACK_MAIN            = "main";
         private const string TRACK_SUPPORT         = "support";
         private const string TRACK_MOTIF           = "motif_main";
@@ -45,9 +29,23 @@ namespace MagicTiles.Scripts.MIDI
         private const float  OBSTACLE_DELAY        = 0.4f;
         private const float  NEEDED_DISTANCE       = 0.3f;
 
-        private List<NoteData> notesList     = new List<NoteData>();
-        private List<NoteData> obstaclesList = new List<NoteData>();
-        private bool           hasObstacle;
+        private static readonly string[] MajorKey = { "Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#" };
+        private static readonly string[] MinorKey = { "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#" };
+
+        private static readonly float[]              PossiblePosition = { -3.6f, -1.2f, 1.2f, 3.6f };
+        private readonly        IAssetManager        assetManager;
+        private readonly        GlobalDataController globalDataController;
+
+        private readonly List<NoteData> notesList     = new();
+        private readonly List<NoteData> obstaclesList = new();
+
+        private readonly Dictionary<int, float> pulseTempo = new();
+        private          bool                   hasObstacle;
+        private          MidiTrack              mainTrack;
+        private          MidiTrack              motifTrack;
+        private          MidiTrack              obstacleTrack;
+        private          MidiTrack              relationTrack;
+        private          MidiTrack              supportTrack;
 
         public MidiGenerator(GlobalDataController globalDataController, IAssetManager assetManager)
         {
@@ -80,18 +78,17 @@ namespace MagicTiles.Scripts.MIDI
             MidiFile songFile = null;
             try
             {
-                songFile = new MidiFile(midiContent, null);
+                songFile = new(midiContent, null);
             }
             catch (Exception e)
             {
-                Debug.LogError("Midi Failed to Load!: " + e?.ToString());
+                Debug.LogError("Midi Failed to Load!: " + e);
 
                 return;
             }
 
             // Get all track for processing
-            for (int i = 0; i < songFile.Tracks.Length; i++)
-            {
+            for (var i = 0; i < songFile.Tracks.Length; i++)
                 // if (!string.IsNullOrWhiteSpace(songFile.Tracks[i].trackName))
                 // {
                 //     switch (songFile.Tracks[i].trackName.Trim().ToLower())
@@ -105,7 +102,6 @@ namespace MagicTiles.Scripts.MIDI
                 //     }
                 // }
                 this.mainTrack = songFile.Tracks[2];
-            }
 
             this.MidiEventToList(this.mainTrack.midiEvents, songFile, this.notesList);
             if (this.obstacleTrack != null) this.MidiEventToList(this.obstacleTrack.midiEvents, songFile, this.obstaclesList);
@@ -113,13 +109,13 @@ namespace MagicTiles.Scripts.MIDI
 
         private void MidiEventToList(MidiEvent[] midiEvents, MidiFile songFile, List<NoteData> notesList)
         {
-            List<MidiEvent> tempoEvents = songFile.getAllMidiEventsofType(MidiHelper.MidiChannelEvent.None, MidiHelper.MidiMetaEvent.None);
-            for (int i = 0; i < tempoEvents.Count; i++)
+            var tempoEvents = songFile.getAllMidiEventsofType(MidiHelper.MidiChannelEvent.None);
+            for (var i = 0; i < tempoEvents.Count; i++)
             {
                 if (tempoEvents[i].midiMetaEvent == MidiHelper.MidiMetaEvent.Tempo)
                 {
                     var mpq   = (uint)tempoEvents[i].Parameters[0];
-                    var bpm   = (uint)Mathf.RoundToInt((MidiHelper.MicroSecondsPerMinute / mpq) * (Mathf.Pow(2, songFile.Denominator) / 4.0f));
+                    var bpm   = (uint)Mathf.RoundToInt(MidiHelper.MicroSecondsPerMinute / mpq * (Mathf.Pow(2, songFile.Denominator) / 4.0f));
                     var pulse = (float)mpq / MicrosecondsPerSecond / songFile.MidiHeader.deltaTicksPerQuarterNote;
                     this.pulseTempo[i] = pulse;
                     //Debug.LogError(string.Format("xxx midiStart: {0}, MSPQ: {1}, BPM: {2}, Pulse: {3}",
@@ -127,14 +123,14 @@ namespace MagicTiles.Scripts.MIDI
                 }
             }
 
-            Dictionary<byte, Stack<MidiEvent>> notesArray = new Dictionary<byte, Stack<MidiEvent>>();
-            for (int i = 0; i < midiEvents.Length; i++)
+            var notesArray = new Dictionary<byte, Stack<MidiEvent>>();
+            for (var i = 0; i < midiEvents.Length; i++)
             {
                 //only care for channel events
                 if (midiEvents[i].isChannelEvent())
                 {
-                    MidiEvent evt  = midiEvents[i];
-                    byte      note = evt.parameter1;
+                    var evt  = midiEvents[i];
+                    var note = evt.parameter1;
 
                     //check for event's type, if is note_on push into timing table
                     if (evt.midiChannelEvent == MidiHelper.MidiChannelEvent.Note_On)
@@ -145,30 +141,30 @@ namespace MagicTiles.Scripts.MIDI
                         }
                         else
                         {
-                            Stack<MidiEvent> noteTiming = new Stack<MidiEvent>();
+                            var noteTiming = new Stack<MidiEvent>();
                             noteTiming.Push(evt);
                             notesArray.Add(note, noteTiming);
                         }
                     } //if is note_off, calculate note duration and add to song data
                     else if (evt.midiChannelEvent == MidiHelper.MidiChannelEvent.Note_Off)
                     {
-                        MidiEvent onEvt = notesArray[note].Pop();
+                        var onEvt = notesArray[note].Pop();
 
                         float pulse; // = 0;
                         //float noteTime = GetNoteTime(onEvt, tempoEvents, out pulse, deltaTickPerQuarterNote);
-                        float noteTime = this.GetNoteTimeByDelta(onEvt.deltaTimeFromStart, tempoEvents, out pulse);
+                        var noteTime = this.GetNoteTimeByDelta(onEvt.deltaTimeFromStart, tempoEvents, out pulse);
 
                         //print(string.Format("Note time: {0}, note time in beat: {1}", onEvt.deltaTimeFromStart * pulse, noteTime));
                         //how long the note should be displayed
 
-                        int   midiDuration = (int)(evt.deltaTimeFromStart - onEvt.deltaTimeFromStart);
-                        float realDuration = midiDuration * pulse;
+                        var midiDuration = (int)(evt.deltaTimeFromStart - onEvt.deltaTimeFromStart);
+                        var realDuration = midiDuration * pulse;
 
-                        NoteData n = new NoteData();
+                        var n = new NoteData();
                         n.onTick       = onEvt.deltaTimeFromStart;
                         n.offTick      = evt.deltaTimeFromStart;
                         n.midiTimeOn   = (int)onEvt.deltaTimeFromStart;
-                        n.velocity     = (int)onEvt.parameter2;
+                        n.velocity     = onEvt.parameter2;
                         n.midiDuration = midiDuration;
                         n.realDuration = realDuration;
                         n.nodeID       = note;
@@ -196,10 +192,7 @@ namespace MagicTiles.Scripts.MIDI
 
             noteModels = noteModels.OrderBy(x => x.TimeAppear).ThenBy(x => x.PositionX).ToList();
 
-            for (var i = 0; i < noteModels.Count; i++)
-            {
-                noteModels[i].Process = 1f * i / noteModels.Count;
-            }
+            for (var i = 0; i < noteModels.Count; i++) noteModels[i].Process = 1f * i / noteModels.Count;
 
             noteModels[^1].Process = 1;
             var lastAppear = 0f;
@@ -248,10 +241,7 @@ namespace MagicTiles.Scripts.MIDI
                     var prev = temp[i - 1];
                     var next = temp[i + 1];
                     if (prev.IsObstacle && next.IsObstacle) continue;
-                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE))
-                    {
-                        noteModels.Remove(current);
-                    }
+                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE)) noteModels.Remove(current);
                 }
 
                 temp = noteModels.Where(x => x.PositionX is > -1.3f and < -1.1f).ToList();
@@ -263,10 +253,7 @@ namespace MagicTiles.Scripts.MIDI
                     var prev = temp[i - 1];
                     var next = temp[i + 1];
                     if (prev.IsObstacle && next.IsObstacle) continue;
-                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE))
-                    {
-                        noteModels.Remove(current);
-                    }
+                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE)) noteModels.Remove(current);
                 }
 
                 temp = noteModels.Where(x => x.PositionX is > 1.1f and < 1.3f).ToList();
@@ -278,10 +265,7 @@ namespace MagicTiles.Scripts.MIDI
                     var prev = temp[i - 1];
                     var next = temp[i + 1];
                     if (prev.IsObstacle && next.IsObstacle) continue;
-                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE))
-                    {
-                        noteModels.Remove(current);
-                    }
+                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE)) noteModels.Remove(current);
                 }
 
                 temp = noteModels.Where(x => x.PositionX is > 3.5f and < 3.7f).ToList();
@@ -293,14 +277,10 @@ namespace MagicTiles.Scripts.MIDI
                     var prev = temp[i - 1];
                     var next = temp[i + 1];
                     if (prev.IsObstacle && next.IsObstacle) continue;
-                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE))
-                    {
-                        noteModels.Remove(current);
-                    }
+                    if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE)) noteModels.Remove(current);
                 }
             }
-            else
-                NoteDatasToNoteModels(this.obstaclesList, true);
+            NoteDatasToNoteModels(this.obstaclesList, true);
 
             // noteModels.ForEach(x => x.PositionX *= this.globalDataController.NoteMargin);
             noteModels = noteModels.OrderBy(x => x.TimeAppear).ToList();
@@ -316,11 +296,8 @@ namespace MagicTiles.Scripts.MIDI
 
             float GetNewPos(params float[] positions)
             {
-                var res = positions[0];
-                while (positions.Contains(res))
-                {
-                    res = PossiblePosition[Random.Range(0, PossiblePosition.Length)];
-                }
+                var res                             = positions[0];
+                while (positions.Contains(res)) res = PossiblePosition[Random.Range(0, PossiblePosition.Length)];
 
                 return res;
             }
@@ -347,7 +324,7 @@ namespace MagicTiles.Scripts.MIDI
                     {
                         while (duration >= 0)
                         {
-                            ELongNote eLongNote = additionalDuration == 0 ? ELongNote.Head : ELongNote.Body;
+                            var eLongNote = additionalDuration == 0 ? ELongNote.Head : ELongNote.Body;
                             var noteModel = new NoteModel(i, noteSprite, noteAudioClip, 0,
                                 note.timeAppear + additionalDuration, 0, positionX,
                                 note.velocity, 0, isStrong, isObstalce, eLongNote == ELongNote.Head ? isMoodChange : false, eLongNote);
@@ -371,28 +348,26 @@ namespace MagicTiles.Scripts.MIDI
 
         private float GetNoteTimeByDelta(ulong delta, List<MidiEvent> tempos, out float secondPerPulse)
         {
-            float retVal                      = 0f;
-            ulong remainingDeltaTimeFromStart = delta;
+            var retVal                      = 0f;
+            var remainingDeltaTimeFromStart = delta;
             secondPerPulse = 0f;
-            bool highestTempo = true;
-            for (int i = tempos.Count - 1; i >= 0; i--)
+            var highestTempo = true;
+            for (var i = tempos.Count - 1; i >= 0; i--)
             {
                 if (tempos[i].midiMetaEvent == MidiHelper.MidiMetaEvent.Tempo)
-                {
                     if (delta >= tempos[i].deltaTimeFromStart)
                     {
-                        float tempSecondPerPulse = this.pulseTempo[i];
+                        var tempSecondPerPulse = this.pulseTempo[i];
                         if (highestTempo)
                         {
                             secondPerPulse = tempSecondPerPulse;
                             highestTempo   = false;
                         }
 
-                        ulong temp = remainingDeltaTimeFromStart - tempos[i].deltaTimeFromStart;
-                        retVal                      += (temp * tempSecondPerPulse);
+                        var temp = remainingDeltaTimeFromStart - tempos[i].deltaTimeFromStart;
+                        retVal                      += temp * tempSecondPerPulse;
                         remainingDeltaTimeFromStart =  tempos[i].deltaTimeFromStart;
                     }
-                }
             }
 
             return retVal;

@@ -6,19 +6,19 @@ namespace MagicTiles.Scripts.Models
 
     public class UserLocalData : ILocalData
     {
-        public bool                                 IsFirstOpen           = true;
-        public Dictionary<string, DogDuetLevelData> DictLevelData         = new();
         public Dictionary<string, int>              AccumulatedDictionary = new();
-        public void                                 Init() { }
+        public Dictionary<string, DogDuetLevelData> DictLevelData         = new();
+        public bool                                 IsFirstOpen           = true;
 
         public Type ControllerType => typeof(UserLocalDataController);
+        public void Init()         { }
     }
 
     public class DogDuetLevelData
     {
-        public int         Story;
-        public LevelStatus LevelStatus;
-        public bool        HasWatchAdUnlock;
         public bool        HasPassed;
+        public bool        HasWatchAdUnlock;
+        public LevelStatus LevelStatus;
+        public int         Story;
     }
 }

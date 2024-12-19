@@ -5,6 +5,5 @@ namespace MagicTiles.Scripts.StateMachines.Game.Interfaces
     public interface IGameState : IState
     {
         IStateMachine StateMachine { get; set; }
-
     }
 }

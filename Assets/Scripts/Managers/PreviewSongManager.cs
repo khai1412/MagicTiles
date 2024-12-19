@@ -18,13 +18,12 @@ namespace MagicTiles.Scripts.Managers
 
         #endregion
 
-        private bool isPlayingPreview = false;
-        public  bool IsPlayingPreview { get => this.isPlayingPreview; private set { this.isPlayingPreview = value; } }
+        public bool IsPlayingPreview { get; private set; } = false;
 
         public async void PlayPreviewSong(string url)
         {
-            this.isPlayingPreview = true;
-            this.audioManager.PlayPlayList(await this.webRequestUtils.DownloadAudio(url), volumeScale: .5f);
+            this.IsPlayingPreview = true;
+            this.audioManager.PlayPlayList(await this.webRequestUtils.DownloadAudio(url), .5f);
         }
 
         public void ResumePreviewSong()
@@ -49,6 +48,9 @@ namespace MagicTiles.Scripts.Managers
             this.audioManager.PausePlayList();
         }
 
-        public float GetPreviewPlaylistTime() => this.audioManager.GetPlayListTime();
+        public float GetPreviewPlaylistTime()
+        {
+            return this.audioManager.GetPlayListTime();
+        }
     }
 }

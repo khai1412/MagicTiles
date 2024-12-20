@@ -18,13 +18,15 @@ namespace BaseDuet.Scripts.Levels
     using UnityEngine;
     using GameCore.Extensions;
     using VContainer;
+    using VContainer.Unity;
+    using Object = UnityEngine.Object;
 
     [RequireComponent(typeof(LevelView))]
     public class LevelController : MonoBehaviour, IStatedComponent, IController<LevelModel, LevelView>
     {
-        private ObjectPoolManager    objectPoolManager;
-        private IAudioManager        audioService;
-        private GlobalDataController globalDataController;
+        [Inject]private ObjectPoolManager    objectPoolManager;
+        [Inject]private IAudioManager        audioService;
+        public GlobalDataController globalDataController;
         private PlayerInputManager   playerInputManager;
 
         public  LevelModel              Model { get; private set; }
@@ -50,11 +52,7 @@ namespace BaseDuet.Scripts.Levels
 
         private void Awake()
         {
-            var container = this.GetCurrentContainer();
-            this.objectPoolManager    = container.Resolve<ObjectPoolManager>();
-            this.audioService         = container.Resolve<IAudioManager>();
-            this.globalDataController = container.Resolve<GlobalDataController>();
-            this.playerInputManager   = container.Resolve<PlayerInputManager>();
+           
         }
 
         private void ClaimTutReward()
@@ -110,6 +108,7 @@ namespace BaseDuet.Scripts.Levels
 
         public async void PrepareState()
         {
+            this.globalDataController    = this.GetCurrentContainer().Resolve<GlobalDataController>();
             this.isFirstHitNote          = false;
             this.cancellationTokenSource = new();
             // this.View.FinalTutorialTimeline.gameObject.SetActive(false);

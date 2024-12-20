@@ -9,6 +9,7 @@
     "CSSynth.Core",
     "GameCore.Extensions",
     "GameCore.Core",
-    "AYellowpaper.SerializedCollections"
+    "AYellowpaper.SerializedCollections",
+    "VContainer"
   ]
 }

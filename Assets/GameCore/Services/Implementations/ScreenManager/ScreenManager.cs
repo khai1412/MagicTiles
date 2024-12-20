@@ -13,10 +13,7 @@ namespace GameCore.Services.Implementations.ScreenManager
         public IScreenPresenter CurrentActiveScreenPresenter { get; }
         private Dictionary<Type, IScreenPresenter> _cachedScreenPresenters = new();
         private IObjectResolver diContainter;
-        public ScreenManager()
-        {
-            this.diContainter = this.GetCurrentContainer();
-        }
+       
         public UniTask OpenScreen<TView, TPresenter>() where TPresenter : IScreenPresenter where TView : IScreenView
         {
             var screenPresenter = this.GetScreen<TPresenter>();
@@ -50,7 +47,7 @@ namespace GameCore.Services.Implementations.ScreenManager
         public IScreenPresenter GetScreen<T>() where T : IScreenPresenter
         {
             if(this._cachedScreenPresenters.TryGetValue(typeof(T), out var screenPresenter)) return screenPresenter;
-            var screenInstance = this.diContainter.Instantiate(typeof(T));
+            var screenInstance = this.GetCurrentContainer().Instantiate(typeof(T));
             this._cachedScreenPresenters.Add(typeof(T), screenInstance as IScreenPresenter);
             return (T)this._cachedScreenPresenters[typeof(T)];
         }

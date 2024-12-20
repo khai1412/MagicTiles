@@ -14,9 +14,10 @@
         public static void RegisterGameCore(this IContainerBuilder builder)
         {
             builder.Register<ObjectPoolManager>(Lifetime.Singleton);
+            builder.Register<LocalDataHandler>(Lifetime.Singleton);
             builder.Register<AssetsManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<AudioManager>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<ScreenManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ScreenManager>(Lifetime.Singleton).AsInterfacesAndSelf();
 
             // foreach (var type in typeof(ILocalData).GetDerivedTypes())
             // {

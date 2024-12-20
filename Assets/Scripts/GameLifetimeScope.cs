@@ -26,8 +26,7 @@
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterGameCore();
-            BaseDuetInstaller.Configure(builder);
-            GameStateMachineInstaller.Configure(builder);
+            
 
             builder.Register<UserLocalData>(Lifetime.Singleton);
             builder.Register<UserLocalDataController>(Lifetime.Singleton);
@@ -38,14 +37,10 @@
             builder.RegisterInstance(this.remoteLevelBlueprint);
             builder.RegisterInstance(this.uiConfigBlueprint);
 
-            builder.Register<SongManager>(Lifetime.Singleton);
-            builder.Register<PreviewSongManager>(Lifetime.Singleton);
-            builder.Register<MidiGenerator>(Lifetime.Singleton);
-
+           
             builder.Register<TimeHelper>(Lifetime.Singleton);
 
             builder.Register<WebRequestUtils>(Lifetime.Singleton);
-            builder.Register<SongUtils>(Lifetime.Singleton);
         }
     }
 }

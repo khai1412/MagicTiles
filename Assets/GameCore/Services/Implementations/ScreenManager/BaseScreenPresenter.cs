@@ -6,6 +6,8 @@ using Object = UnityEngine.Object;
 
 namespace GameCore.Services.Implementations.ScreenManager
 {
+    using UnityEngine;
+
     public class BaseScreenPresenter<TView> : IScreenPresenter<TView> where TView : BaseScreenView
     {
         private readonly UIConfigBlueprint _uiConfigBlueprint;
@@ -26,17 +28,19 @@ namespace GameCore.Services.Implementations.ScreenManager
         [Obsolete("Obsolete")]
         public TView CreateView()
         {
-            if (typeof(TView).GetCustomAttributes(typeof(ScreenInfo), false).First() is ScreenInfo screenInfo)
+            if (this.GetType().GetCustomAttributes(typeof(ScreenInfo), false).First() is ScreenInfo screenInfo)
             {
                 var viewPrefab = Object.Instantiate(this._uiConfigBlueprint.uiConfigs[screenInfo.ScreenName]);
                 var rootCanvas = Object.FindObjectsOfType<RootUICanvas>().FirstOrDefault();
                 if (rootCanvas != null)
                 {
                     viewPrefab.transform.SetParent(screenInfo.IsOverlay? rootCanvas.overlayTransform : rootCanvas.transform);
+                    viewPrefab.transform.localPosition = Vector3.zero;
                 }
 
                 viewPrefab.GetComponent<TView>().OnViewReady = OnViewReady;
-                return viewPrefab.GetComponent<TView>();
+                this.View                                    = viewPrefab.GetComponent<TView>();
+                return this.View;
             }
 
             return null;

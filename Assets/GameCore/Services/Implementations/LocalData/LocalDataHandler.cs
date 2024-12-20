@@ -48,7 +48,7 @@ namespace GameCore.Services.Implementations.LocalData
             var json = PlayerPrefs.GetString(key);
 
             var result = string.IsNullOrEmpty(json)
-                ? this.GetCurrentContainer().Resolve(type)
+                ? this.GetCurrentContainer().Instantiate(type)
                 : JsonConvert.DeserializeObject(json, type);
 
             this.AddOrUpdateLocalData(key, (ILocalData)result);

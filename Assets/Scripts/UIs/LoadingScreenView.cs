@@ -38,7 +38,7 @@ namespace UIs
                 0.7f
             ).onComplete += () =>
             {
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene("Main");
             };
         }
     }

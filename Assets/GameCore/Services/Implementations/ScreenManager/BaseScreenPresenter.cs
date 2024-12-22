@@ -30,16 +30,15 @@ namespace GameCore.Services.Implementations.ScreenManager
         {
             if (this.GetType().GetCustomAttributes(typeof(ScreenInfo), false).First() is ScreenInfo screenInfo)
             {
-                var viewPrefab = Object.Instantiate(this._uiConfigBlueprint.uiConfigs[screenInfo.ScreenName]);
+                var viewObject = Object.Instantiate(this._uiConfigBlueprint.uiConfigs[screenInfo.ScreenName]);
                 var rootCanvas = Object.FindObjectsOfType<RootUICanvas>().FirstOrDefault();
                 if (rootCanvas != null)
                 {
-                    viewPrefab.transform.SetParent(screenInfo.IsOverlay? rootCanvas.overlayTransform : rootCanvas.transform);
-                    viewPrefab.transform.localPosition = Vector3.zero;
+                    viewObject.transform.SetParent(screenInfo.IsOverlay? rootCanvas.overlayTransform : rootCanvas.transform);
+                    viewObject.transform.localPosition = Vector3.zero;
                 }
-
-                viewPrefab.GetComponent<TView>().OnViewReady = OnViewReady;
-                this.View                                    = viewPrefab.GetComponent<TView>();
+                viewObject.GetComponent<TView>().OnViewReady = OnViewReady;
+                this.View                                    = viewObject.GetComponent<TView>();
                 return this.View;
             }
 
@@ -58,7 +57,10 @@ namespace GameCore.Services.Implementations.ScreenManager
 
         public void CloseView()
         {
-            this.View.HideView();
+            if (this.View.gameObject != null)
+            {
+                this.View.HideView();
+            }
         }
 
         public virtual UniTask BindData()

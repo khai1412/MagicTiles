@@ -12,3 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7c3a10d9164f59a055004fa7c52ed1, type: 3}
   m_Name: RemoteLevelBlueprint
   m_EditorClassIdentifier: 
+  remoteLevelRecords:
+    _serializedList:
+    - Key: 1
+      Value:
+        Story: 1
+        songName: Interstella
+        artistName: Chillies
+        acmSongID: 
+        mainAudioUrl: 
+        levelDesignUrl: 
+        previewAudioUrl: 
+        songImage: 
+        unlockType: 
+        difficultyLevel: 
+        backgroundAudioUrl: 

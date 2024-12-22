@@ -1,13 +1,14 @@
 namespace MagicTiles.Scripts.Blueprints
 {
     using System;
+    using AYellowpaper.SerializedCollections;
     using GameCore.Extensions;
     using UnityEngine;
 
     [CreateAssetMenu(fileName = "RemoteLevelBlueprint", menuName = "ScriptableObjects/RemoteLevelBlueprint")]
     public class RemoteLevelBlueprint : ScriptableObject
     {
-        public UnitySerializedDictionary<string, RemoteLevelRecord> remoteLevelRecords;
+        public RemoteLevelRecords remoteLevelRecords;
     }
 
     [Serializable]
@@ -30,4 +31,7 @@ namespace MagicTiles.Scripts.Blueprints
             return this.Story.ToString();
         }
     }
+    
+    [Serializable]
+    public class RemoteLevelRecords : SerializedDictionary<string, RemoteLevelRecord>{}
 }

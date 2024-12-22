@@ -215,6 +215,7 @@ namespace MagicTiles.Scripts.Managers
             this.previewSongManager      = previewSongManager;
             // this.gameStateMachine        = gameStateMachine;
             this.InitSong("");
+            this.userLocalDataController.Initialize();
         }
 
         #endregion

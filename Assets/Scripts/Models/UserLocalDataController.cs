@@ -28,7 +28,13 @@ namespace MagicTiles.Scripts.Models
         public bool IsFirstOpen { get => this.userLocalData.IsFirstOpen; set => this.userLocalData.IsFirstOpen = value; }
 
         public int  GetDictionaryLevelDataCount => this.userLocalData.DictLevelData.Count;
-        public void Initialize()                { }
+        public void Initialize()
+        {
+            if (this.userLocalData.DictLevelData.Count == 0)
+            {
+                this.InitListLevelData(this.levelBlueprint.LevelRecords);
+            }
+        }
 
         public void InitListLevelData(Dictionary<string, LevelRecord> list)
         {
@@ -67,13 +73,12 @@ namespace MagicTiles.Scripts.Models
 
         public Dictionary<string, DuetComposedLevelData> GetDictionaryLeveData(GlobalDataController gdc)
         {
-            var dictionary = new Dictionary<string, DuetComposedLevelData>();
-
-            return dictionary;
+            return this.levelBlueprint.LevelRecords.ToDictionary(levelBlueprintLevelRecord => levelBlueprintLevelRecord.Key, levelBlueprintLevelRecord => this.GetLevelData(levelBlueprintLevelRecord.Key, gdc));
         }
 
         public DuetComposedLevelData GetLevelData(string songId, GlobalDataController gdc)
         {
+            var a = this.userLocalData;
             return new(
                 this.userLocalData.DictLevelData[songId],
                 this.levelBlueprint.LevelRecords[songId],

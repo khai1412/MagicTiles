@@ -28,7 +28,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
         {
             this.songManager.SelectDefaultSong().Forget();
             this.playerInputManager.SetActive(false);
-            this.screenManager.CloseAllScreen();
+            //this.screenManager.CloseAllScreen();
             // this.screenManager.OpenScreen<HomeScreenPresenter>().Forget();
         }
 

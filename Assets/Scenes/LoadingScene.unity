@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RootUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5858890100526345819, guid: 2cc0cf25adb13426193d2c31b0636a04, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8376049612790757778, guid: 2cc0cf25adb13426193d2c31b0636a04, type: 3}
       propertyPath: m_Pivot.x
       value: 0

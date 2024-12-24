@@ -37,10 +37,11 @@
             builder.RegisterInstance(this.remoteLevelBlueprint);
             builder.RegisterInstance(this.uiConfigBlueprint);
 
-           
+
             builder.Register<TimeHelper>(Lifetime.Singleton);
 
             builder.Register<WebRequestUtils>(Lifetime.Singleton);
+
         }
     }
 }

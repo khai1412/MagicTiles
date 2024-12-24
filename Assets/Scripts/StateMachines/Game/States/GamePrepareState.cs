@@ -45,6 +45,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
             var audioClip   = this.songUtils.GetSongAudio(levelModel.LevelRecord.SongAddress);
             await this.songManager.LoadSong(midiContent, audioClip);
             this.levelController.PrepareState();
+            this.globalDataController.PlayGame();
         }
 
         public void          Exit()       { }

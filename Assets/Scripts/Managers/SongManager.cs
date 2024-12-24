@@ -10,6 +10,8 @@ namespace MagicTiles.Scripts.Managers
     using Cysharp.Threading.Tasks;
     using GameCore.Core.AssetsManager;
     using GameCore.Core.AudioManager;
+    using GameCore.Extensions;
+    using GameCore.Scripts;
     using MagicTiles.Scripts.Blueprints;
     using MagicTiles.Scripts.Helpers;
     using MagicTiles.Scripts.MIDI;
@@ -91,7 +93,15 @@ namespace MagicTiles.Scripts.Managers
         public void PlayCurrentSong(EPlayType ePlayType = EPlayType.Home, EUnlockType eUnlockType = EUnlockType.Default, bool redirectToPrepareState = true)
         {
             this.LastPlayType = this.globalDataController.IsGameplayTutorial ? EPlayType.Tutorial : ePlayType;
-            if (redirectToPrepareState) this.gameStateMachine.TransitionTo<GamePrepareState>();
+            if (redirectToPrepareState)
+            {
+                if (this.gameStateMachine == null)
+                {
+                    this.gameStateMachine = this.GetCurrentContainer().Resolve(typeof(GameStateMachine)) as GameStateMachine;
+                }
+
+                this.gameStateMachine.TransitionTo<GamePrepareState>();
+            }
             this.hasLogMeStart = false;
         }
 
@@ -126,6 +136,7 @@ namespace MagicTiles.Scripts.Managers
                 var listSong = strListSong.Split(",").Select(x => x).ToList();
                 this.ListLevelRecord = this.levelBlueprint.LevelRecords.Where(x => listSong.Contains(x.Value.SongId)).Select(x => x.Value).ToList();
             }
+            this.PlaySong("1");
         }
 
         public Dictionary<string, DuetComposedLevelData> GetAllLevelData()
@@ -185,7 +196,7 @@ namespace MagicTiles.Scripts.Managers
         private readonly IAssetManager           gameAssets;
         private readonly IAudioManager           audioService;
         private readonly PreviewSongManager      previewSongManager;
-        private readonly GameStateMachine        gameStateMachine;
+        private  GameStateMachine        gameStateMachine;
 
         public SongManager(
             LevelController levelController,
@@ -214,8 +225,9 @@ namespace MagicTiles.Scripts.Managers
             this.audioService            = audioService;
             this.previewSongManager      = previewSongManager;
             // this.gameStateMachine        = gameStateMachine;
-            this.InitSong("");
             this.userLocalDataController.Initialize();
+            this.InitSong("1");
+            
         }
 
         #endregion

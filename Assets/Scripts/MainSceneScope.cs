@@ -12,16 +12,13 @@
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
-            BaseDuetInstaller.Configure(builder);
             builder.Register<SongManager>(Lifetime.Singleton);
             builder.Register<PreviewSongManager>(Lifetime.Singleton);
             builder.Register<MidiGenerator>(Lifetime.Singleton);
             builder.Register<SongUtils>(Lifetime.Singleton);
-
+            BaseDuetInstaller.Configure(builder);
             GameStateMachineInstaller.Configure(builder);
-
             
-
         }
     }
 }

@@ -93,21 +93,13 @@ namespace MagicTiles.Scripts.Managers
         public void PlayCurrentSong(EPlayType ePlayType = EPlayType.Home, EUnlockType eUnlockType = EUnlockType.Default, bool redirectToPrepareState = true)
         {
             this.LastPlayType = this.globalDataController.IsGameplayTutorial ? EPlayType.Tutorial : ePlayType;
-            if (redirectToPrepareState)
-            {
-                if (this.gameStateMachine == null)
-                {
-                    this.gameStateMachine = this.GetCurrentContainer().Resolve(typeof(GameStateMachine)) as GameStateMachine;
-                }
-
-                this.gameStateMachine.TransitionTo<GamePrepareState>();
-            }
+           
             this.hasLogMeStart = false;
         }
 
         public async UniTask ReplayCurrentSong()
         {
-            this.gameStateMachine.TransitionTo<GamePrepareState>();
+            
         }
 
         public async UniTask LoadSong(byte[] midiContent, AudioClip audioClip, int seed = 0)
@@ -196,7 +188,6 @@ namespace MagicTiles.Scripts.Managers
         private readonly IAssetManager           gameAssets;
         private readonly IAudioManager           audioService;
         private readonly PreviewSongManager      previewSongManager;
-        private  GameStateMachine        gameStateMachine;
 
         public SongManager(
             LevelController levelController,
@@ -210,7 +201,6 @@ namespace MagicTiles.Scripts.Managers
             IAssetManager           gameAssets,
             IAudioManager           audioService,
             PreviewSongManager      previewSongManager
-            // GameStateMachine        gameStateMachine
         )
         {
             this.levelController = levelController;
@@ -224,9 +214,7 @@ namespace MagicTiles.Scripts.Managers
             this.gameAssets              = gameAssets;
             this.audioService            = audioService;
             this.previewSongManager      = previewSongManager;
-            // this.gameStateMachine        = gameStateMachine;
             this.userLocalDataController.Initialize();
-            this.InitSong("1");
             
         }
 

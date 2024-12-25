@@ -41,6 +41,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
         public async void Enter()
         {
             var levelModel  = this.songManager.GetAllLevelData()[this.globalDataController.CurrentSongId];
+            var a           = this.songUtils.GetSongMidiContent(levelModel.LevelRecord.MidiAddress);
             var midiContent = this.songUtils.GetSongMidiContent(levelModel.LevelRecord.MidiAddress).bytes;
             var audioClip   = this.songUtils.GetSongAudio(levelModel.LevelRecord.SongAddress);
             await this.songManager.LoadSong(midiContent, audioClip);

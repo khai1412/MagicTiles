@@ -27,7 +27,10 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
         public async void Enter()
         {
             this.songManager.SelectDefaultSong().Forget();
-            this.playerInputManager.SetActive(false);
+            this.playerInputManager.SetActive(true);
+            this.songManager.InitSong("1");
+            this.StateMachine.TransitionTo<GamePrepareState>();
+
             //this.screenManager.CloseAllScreen();
             // this.screenManager.OpenScreen<HomeScreenPresenter>().Forget();
         }

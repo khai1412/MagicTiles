@@ -101,7 +101,7 @@ namespace MagicTiles.Scripts.MIDI
                 //         case TRACK_OBSTACLE: this.obstacleTrack = songFile.Tracks[i]; break;
                 //     }
                 // }
-                this.mainTrack = songFile.Tracks[2];
+                this.mainTrack = songFile.Tracks[^1];
 
             this.MidiEventToList(this.mainTrack.midiEvents, songFile, this.notesList);
             if (this.obstacleTrack != null) this.MidiEventToList(this.obstacleTrack.midiEvents, songFile, this.obstaclesList);

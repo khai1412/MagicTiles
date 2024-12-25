@@ -25,5 +25,5 @@ MonoBehaviour:
         ListThemes:
         - BlueTheme
         - GreenTheme
-        SongAddress: /Songs/Audio/Interstella
-        MidiAddress: /Songs/Midi/Interstella
+        SongAddress: Songs/Audio/Interstellar
+        MidiAddress: Songs/Midi/Interstellar

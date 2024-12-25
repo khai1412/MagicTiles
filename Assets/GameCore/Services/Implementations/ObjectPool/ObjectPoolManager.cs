@@ -10,7 +10,20 @@ namespace GameCore.Services.Implementations.ObjectPool
 
     public sealed class ObjectPoolManager
     {
-        public static ObjectPoolManager Instance { get; private set; }
+        public static ObjectPoolManager Instance
+        {
+            get
+            {
+                if (Instance == null)
+                {
+                    Instance = new ObjectPoolManager();
+                }
+
+                return Instance;
+            }
+            set => Instance = value;
+        }
+
 
         private readonly List<GameObject>                   tempList               = new List<GameObject>();
         private readonly Dictionary<GameObject, ObjectPool> prefabToObjectPool     = new Dictionary<GameObject, ObjectPool>();

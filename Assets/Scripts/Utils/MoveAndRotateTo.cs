@@ -13,10 +13,7 @@
 
         private RectTransform rectTransform;
 
-        private void Start()
-        {
-            rectTransform = GetComponent<RectTransform>();
-        }
+        private void Start() { rectTransform = GetComponent<RectTransform>(); }
 
         void Update()
         {
@@ -25,32 +22,29 @@
             // Calculate direction to the target
             Vector2 direction = target.anchoredPosition - rectTransform.anchoredPosition;
 
-            if (direction.sqrMagnitude > 0.01f)
-            {
-                // Normalize direction
-                Vector2 normalizedDirection = direction.normalized;
+            // Normalize direction
+            Vector2 normalizedDirection = direction.normalized;
 
-                // Calculate the desired position behind the target
-                Vector2 desiredPosition = target.anchoredPosition - normalizedDirection * followDistance;
+            // Calculate the desired position behind the target
+            Vector2 desiredPosition = target.anchoredPosition - normalizedDirection * followDistance;
 
-                // Smooth movement toward the desired position
-                rectTransform.anchoredPosition = Vector2.Lerp(
-                    rectTransform.anchoredPosition,
-                    desiredPosition,
-                    moveSpeed * Time.deltaTime
-                );
+            // Smooth movement toward the desired position
+            rectTransform.anchoredPosition = Vector2.Lerp(
+                rectTransform.anchoredPosition,
+                desiredPosition,
+                moveSpeed * Time.deltaTime
+            );
 
-                // Calculate the angle for rotation
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+            // Calculate the angle for rotation
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 
-                // Smoothly rotate toward the target
-                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-                rectTransform.rotation = Quaternion.Lerp(
-                    rectTransform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
-            }
+            // Smoothly rotate toward the target
+            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+            rectTransform.rotation = Quaternion.Lerp(
+                rectTransform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
         }
     }
 }

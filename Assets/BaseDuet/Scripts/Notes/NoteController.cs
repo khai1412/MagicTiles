@@ -73,11 +73,11 @@ namespace BaseDuet.Scripts.Notes
             // this.TryCreateReviveToken();
             this.isMoving = false;
             // this.View.ItemSkin.gameObject.SetActive(true);
-            this.Model.IsHit                        =  false;
-            this.View.ItemSkin.sprite               =  this.Model.NoteSprite;
-            this.Offlane                            =  this.Model.PositionX > 0 ? this.globalDataController.Offlane : -this.globalDataController.Offlane;
-            this.View.transform.localPosition       =  new((this.Model.PositionX * this.globalDataController.NoteMargin) * this.globalDataController.DistancePerUnit, this.globalDataController.HighestNotePosition, 0);
-            this.View.transform.position            += new Vector3(this.Offlane, 0, 0);
+            this.Model.IsHit                  =  false;
+            this.View.ItemSkin.sprite         =  this.Model.NoteSprite;
+            this.Offlane                      =  this.Model.PositionX > 0 ? this.globalDataController.Offlane : -this.globalDataController.Offlane;
+            this.View.transform.localPosition =  new((this.Model.PositionX * this.globalDataController.NoteMargin) * this.globalDataController.DistancePerUnit, this.globalDataController.HighestNotePosition, 0);
+            this.View.transform.position      += new Vector3(this.Offlane, 0, 0);
             // this.View.ItemSkin.transform.localScale =  Vector3.one;
         }
 
@@ -109,7 +109,7 @@ namespace BaseDuet.Scripts.Notes
 
         private void StartDoMove()
         {
-            this.moveTween = this.View.transform.DOMoveY(this.globalDataController.LowestNotePosition, 1000, false)
+            this.moveTween = this.View.transform.DOMoveY(this.globalDataController.LowestNotePosition, this.globalDataController.NoteSpeed)
                 .OnStart(() =>
                 {
                     this.SetupView();
@@ -119,7 +119,6 @@ namespace BaseDuet.Scripts.Notes
                 // .SetDelay(this.Model.TimeAppear)
                 .OnComplete(() =>
                 {
-                    this.Model.IsHit = false;
                     this.FinishNote(0);
                 });
             if (this.Model.IsObstacle) this.SetupPreWarningParticle(this.Model.TimeAppear);
@@ -289,23 +288,23 @@ namespace BaseDuet.Scripts.Notes
 
         public void MissNote()
         {
-            if (this.Model.IsHit) return;
-            if (this.Model.IsObstacle || this.globalDataController.IsCheating)
-            {
-                this.globalDataController.TotalObstaclePassed++;
-                return;
-            }
-
-            if (this.globalDataController.IsInvincible)
-            {
-                this.Model.IsHit = true;
-                this.RecycleNote();
-            }
-            else
-            {
-            }
-
-            this.moveTween.Kill();
+            // if (this.Model.IsHit) return;
+            // if (this.Model.IsObstacle || this.globalDataController.IsCheating)
+            // {
+            //     this.globalDataController.TotalObstaclePassed++;
+            //     return;
+            // }
+            //
+            // if (this.globalDataController.IsInvincible)
+            // {
+            //     this.Model.IsHit = true;
+            // }
+            // else
+            // {
+            //     this.moveTween.Kill();
+            // }
+            this.moveTween?.Kill();
+            this.RecycleNote();
         }
 
         public void UpdateVolume(float value) { }
@@ -323,7 +322,7 @@ namespace BaseDuet.Scripts.Notes
             try
             {
                 this.View.Recycle();
-                this.reviveToken?.Dispose();
+                // this.reviveToken?.Dispose();
             }
             catch (Exception e)
             {

@@ -4,14 +4,14 @@ namespace BaseDuet.Scripts.Data.SessionData
     {
         #region From blueprint
 
-        // public float  BaseNoteSpeed         => this.StaticValueBlueprint.BaseNoteSpeed;
+        public float  BaseNoteSpeed         => this.StaticValueBlueprint.BaseNoteSpeed;
         public float  CharacterSpeed        => this.StaticValueBlueprint.CharacterSpeed;
         public float  CharacterPositionY    => this.StaticValueBlueprint.CharacterPositionY;
         public float  CrosslinePositionYGap => this.StaticValueBlueprint.CrosslinePositionYGap;
-        public float  LowestNotePosition    => -3000;
+        public float  LowestNotePosition    => this.StaticValueBlueprint.LowestNotePosition;
         public float  HighestNotePosition   => this.StaticValueBlueprint.HighestNotePosition;
         public float  HighestTimeScale      => this.StaticValueBlueprint.HighestTimeScale;
-        public float  DistancePerUnit       => 50;
+        public float  DistancePerUnit       => this.StaticValueBlueprint.DistancePerUnit;
         public string ObstacleNoteSprite    => this.StaticValueBlueprint.ObstacleNoteSprite;
         public int    MaxReviveCount        => this.StaticValueBlueprint.MaxReviveCount;
         public float  ReviveTime            => this.StaticValueBlueprint.ReviveTime;

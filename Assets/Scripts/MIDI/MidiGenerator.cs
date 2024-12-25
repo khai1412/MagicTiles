@@ -32,7 +32,7 @@ namespace MagicTiles.Scripts.MIDI
         private static readonly string[] MajorKey = { "Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#" };
         private static readonly string[] MinorKey = { "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#" };
 
-        private static readonly float[]              PossiblePosition = { -3.6f, -1.2f, 1.2f, 3.6f };
+        private static readonly float[]              PossiblePosition = { -2.4f, -1f, 1f, 2.4f };
         private readonly        IAssetManager        assetManager;
         private readonly        GlobalDataController globalDataController;
 
@@ -280,7 +280,7 @@ namespace MagicTiles.Scripts.MIDI
                     if ((!prev.IsObstacle && Mathf.Abs(prev.PositionX - current.PositionX) < 0.1f && Mathf.Abs(prev.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE) || (!next.IsObstacle && Mathf.Abs(next.PositionX - current.PositionX) < 0.1f && Mathf.Abs(next.TimeAppear - current.TimeAppear) < NEEDED_DISTANCE)) noteModels.Remove(current);
                 }
             }
-            NoteDatasToNoteModels(this.obstaclesList, true);
+            // NoteDatasToNoteModels(this.obstaclesList, true);
 
             // noteModels.ForEach(x => x.PositionX *= this.globalDataController.NoteMargin);
             noteModels = noteModels.OrderBy(x => x.TimeAppear).ToList();
@@ -302,23 +302,34 @@ namespace MagicTiles.Scripts.MIDI
                 return res;
             }
 
-            void NoteDatasToNoteModels(List<NoteData> notes, bool isObstalce)
+            void NoteDatasToNoteModels(List<NoteData> notes, bool hasObstacle)
             {
-                var noteSprite         = isObstalce ? obstacleNoteSprite : normalNoteSprite;
+                var noteSprite         = hasObstacle ? obstacleNoteSprite : normalNoteSprite;
                 var listMoodchangeTime = notes.Where(x => x.velocity < 10).Select(x => x.timeAppear);
+                var maxLaneIndex       = notes.Max(x => x.laneIndex);
+                var minLaneIndex       = notes.Min(x => x.laneIndex);
+
+                var numberOfLane = 4;
+
+                var gap = (1f * maxLaneIndex - minLaneIndex) / numberOfLane;
+
                 for (var i = 0; i < notes.Count; i++)
                 {
-                    var note = notes[i];
-                    if (note.laneIndex is < 31 or > 57) continue;
-                    var duration     = Mathf.Max(note.realDuration - 0.2f, 0);
-                    var positionX    = Mathf.Clamp(note.laneIndex - 39.5f, -2.5f, 2.5f);
-                    var isStrong     = note.velocity > 101.6f;
-                    var isMoodChange = listMoodchangeTime.Any(x => x == note.timeAppear) && !isObstalce;
-                    positionX = positionX == 0 ? 0.5f : positionX;
-                    positionX = positionX > 0 ? positionX + 0.5f : positionX - 0.5f;
-                    //TODO Change distance between note
-                    // positionX *= this.globalDataController.NoteMargin;
-                    // positionX *= 1.2f;
+                    var note     = notes[i];
+                    var duration = Mathf.Max(note.realDuration - 0.2f, 0);
+
+                    var positionX = 0f;
+                    for (var j = 0; j < numberOfLane; j++)
+                    {
+                        if (note.laneIndex >= minLaneIndex + j * gap && note.laneIndex <= minLaneIndex + (j + 1) * gap)
+                        {
+                            positionX = PossiblePosition[j];
+                            break;
+                        }
+                    }
+
+                    var isStrong           = note.velocity > 101.6f;
+                    var isMoodChange       = listMoodchangeTime.Any(x => x == note.timeAppear) && !hasObstacle;
                     var additionalDuration = 0f;
                     if (duration > 0)
                     {
@@ -327,7 +338,7 @@ namespace MagicTiles.Scripts.MIDI
                             var eLongNote = additionalDuration == 0 ? ELongNote.Head : ELongNote.Body;
                             var noteModel = new NoteModel(i, noteSprite, noteAudioClip, 0,
                                 note.timeAppear + additionalDuration, 0, positionX,
-                                note.velocity, 0, isStrong, isObstalce, eLongNote == ELongNote.Head ? isMoodChange : false, eLongNote);
+                                note.velocity, 0, isStrong, hasObstacle, eLongNote == ELongNote.Head ? isMoodChange : false, eLongNote);
                             noteModels.Add(noteModel);
                             duration           -= 0.05f;
                             additionalDuration += 0.05f;
@@ -339,7 +350,7 @@ namespace MagicTiles.Scripts.MIDI
                     {
                         var noteModel = new NoteModel(i, noteSprite, noteAudioClip, 0,
                             note.timeAppear + additionalDuration, 0, positionX,
-                            note.velocity, 0, isStrong, isObstalce, isMoodChange);
+                            note.velocity, 0, isStrong, hasObstacle, isMoodChange);
                         noteModels.Add(noteModel);
                     }
                 }

@@ -17,14 +17,12 @@ namespace BaseDuet.Scripts.Characters
     {
         #region Inject
 
-        private BaseDuetCharacterViewHelper BaseDuetCharacterViewHelper;
-        private GlobalDataController        globalDataController;
+        [Inject]private BaseDuetCharacterViewHelper BaseDuetCharacterViewHelper;
+        [Inject]private GlobalDataController        globalDataController;
 
         private void Awake()
         {
-            var container = this.GetCurrentContainer();
-            this.BaseDuetCharacterViewHelper = container.Resolve<BaseDuetCharacterViewHelper>();
-            this.globalDataController        = container.Resolve<GlobalDataController>();
+            
         }
 
         #endregion

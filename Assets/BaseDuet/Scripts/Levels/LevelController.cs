@@ -26,7 +26,7 @@ namespace BaseDuet.Scripts.Levels
     {
         [Inject]private ObjectPoolManager    objectPoolManager;
         [Inject]private IAudioManager        audioService;
-        public GlobalDataController globalDataController;
+        [Inject]public GlobalDataController  globalDataController;
         private PlayerInputManager   playerInputManager;
 
         public  LevelModel              Model { get; private set; }
@@ -108,7 +108,7 @@ namespace BaseDuet.Scripts.Levels
 
         public async void PrepareState()
         {
-            this.globalDataController    = this.GetCurrentContainer().Resolve<GlobalDataController>();
+            //this.globalDataController    = this.GetCurrentContainer().Resolve<GlobalDataController>();
             this.isFirstHitNote          = false;
             this.cancellationTokenSource = new();
             // this.View.FinalTutorialTimeline.gameObject.SetActive(false);
@@ -118,7 +118,6 @@ namespace BaseDuet.Scripts.Levels
             if (this.View.SplitLine != null) this.View.SplitLine.SetActive(true);
             this.View.DogLine.gameObject.SetActive(true);
             this.View.CrossLine.gameObject.SetActive(true);
-            this.playerInputManager.ResetModuleList();
             this.globalDataController.MaxHealth     = 0;
             this.globalDataController.CurrentHealth = this.globalDataController.MaxHealth;
             this.globalDataController.IsInvincible  = false;
@@ -221,18 +220,18 @@ namespace BaseDuet.Scripts.Levels
 
         private void SpawnDog(params CharacterModel[] characterModels)
         {
-            if (this.characterDogControllers.Count == characterModels.Length) return;
-            for (int i = 0; i < characterModels.Length; i++)
-            {
-                var characterDogController = this.objectPoolManager.Spawn(this.View.CharacterDogControllerPrefab).GetComponent<CharacterDogController>();
-                this.View.ListTouchView[i].SetTarget(characterDogController);
-                characterDogController.transform.SetParent(this.View.CharacterContainer, false);
-                characterDogController.BindData(characterModels[i], null);
-                characterDogController.BindPosition(i);
-                characterDogController.BindSkin(i + 1);
-                characterDogController.PrepareState();
-                this.characterDogControllers.Add(characterDogController);
-            }
+            // if (this.characterDogControllers.Count == characterModels.Length) return;
+            // for (int i = 0; i < characterModels.Length; i++)
+            // {
+            //     var characterDogController = this.objectPoolManager.Spawn(this.View.CharacterDogControllerPrefab).GetComponent<CharacterDogController>();
+            //     this.View.ListTouchView[i].SetTarget(characterDogController);
+            //     characterDogController.transform.SetParent(this.View.CharacterContainer, false);
+            //     characterDogController.BindData(characterModels[i], null);
+            //     characterDogController.BindPosition(i);
+            //     characterDogController.BindSkin(i + 1);
+            //     characterDogController.PrepareState();
+            //     this.characterDogControllers.Add(characterDogController);
+            // }
         }
 
         public async void StartState()

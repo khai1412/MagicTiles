@@ -19,13 +19,13 @@ namespace BaseDuet.Scripts.Interfaces
         }
         private void DoChangeMood()
         {
-            foreach (var colorComponent in this.ColorComponents)
-            {
-                if (this.currentMoodThemeConfig.NameToColor.TryGetValue(colorComponent.ColorComponentName, out var color))
-                {
-                    colorComponent.ChangeColor(color);
-                }
-            }
+            // foreach (var colorComponent in this.ColorComponents)
+            // {
+            //     if (this.currentMoodThemeConfig.NameToColor.TryGetValue(colorComponent.ColorComponentName, out var color))
+            //     {
+            //         colorComponent.ChangeColor(color);
+            //     }
+            // }
 
             foreach (var speedComponent in this.SpeedComponents)
             {

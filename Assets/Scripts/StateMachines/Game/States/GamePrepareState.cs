@@ -2,6 +2,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
 {
     using BaseDuet.Scripts.Data.SessionData;
     using BaseDuet.Scripts.Levels;
+    using BasePlayerInput.InputSystem;
     using GameCore.Core.AudioManager;
     using GameCore.Core.StateMachine;
     using GameCore.Services.Abstractions.ScreenManager;
@@ -13,6 +14,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
     {
         private readonly IAudioManager        audioService;
         private readonly GlobalDataController globalDataController;
+        private readonly PlayerInputManager   playerInputManager;
         private readonly LevelController      levelController;
         private readonly MidiGenerator        midiGenerator;
         private readonly IScreenManager       screenManager;
@@ -26,7 +28,8 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
             MidiGenerator        midiGenerator,
             SongUtils            songUtils,
             LevelController      levelController,
-            GlobalDataController globalDataController
+            GlobalDataController globalDataController,
+            PlayerInputManager playerInputManager
         )
         {
             this.screenManager        = screenManager;
@@ -36,6 +39,7 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
             this.songUtils            = songUtils;
             this.levelController      = levelController;
             this.globalDataController = globalDataController;
+            this.playerInputManager   = playerInputManager;
         }
 
         public async void Enter()
@@ -47,6 +51,9 @@ namespace MagicTiles.Scripts.StateMachines.Game.States
             await this.songManager.LoadSong(midiContent, audioClip);
             this.levelController.PrepareState();
             this.globalDataController.PlayGame();
+            this.levelController.StartState();
+            this.playerInputManager.ResetModuleList();
+
         }
 
         public void          Exit()       { }

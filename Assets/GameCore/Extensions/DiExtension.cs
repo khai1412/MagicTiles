@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using UnityEngine;
     using VContainer;
     using VContainer.Internal;
     using VContainer.Unity;
@@ -14,8 +15,21 @@
         [Obsolete("Obsolete")]
         public static IObjectResolver GetCurrentContainer()
         {
-            if (CurrentSceneContext == null) CurrentSceneContext = Object.FindObjectOfType<LifetimeScope>();
-            return CurrentSceneContext!.Container;
+            var lifetimeScopes = Object.FindObjectsOfType<LifetimeScope>();
+
+            foreach (var scope in lifetimeScopes)
+            {
+                // Check if the LifetimeScope is the scene-specific one
+                if (scope.Parent != null) // Scene containers typically have a parent scope
+                {
+                    Debug.Log("Scene-specific LifetimeScope found.");
+                    var sceneContainer = scope.Container;
+
+                    return sceneContainer;
+                }
+            }
+
+            throw new Exception("Can not find current scene context");
         }
 
         public static IObjectResolver GetCurrentContainer(this object _)

@@ -16,20 +16,17 @@ namespace BaseDuet.Scripts.Data.SessionData
     {
         private readonly GlobalData                  globalData;
         private readonly IAudioManager               audioService;
-        private readonly LevelController             levelController;
         private readonly BaseDuetLocalDataController duetLocalDataController;
         public           StaticValueBlueprint        StaticValueBlueprint { get; private set; }
         public GlobalDataController(
             GlobalData                  globalData,
             IAudioManager               audioService,
             StaticValueBlueprint        staticValueBlueprint,
-            LevelController             levelController,
             BaseDuetLocalDataController duetLocalDataController
         )
         {
             this.globalData              = globalData;
             this.audioService            = audioService;
-            this.levelController         = levelController;
             this.duetLocalDataController = duetLocalDataController;
             this.StaticValueBlueprint    = staticValueBlueprint;
         }
@@ -158,13 +155,11 @@ namespace BaseDuet.Scripts.Data.SessionData
         {
             this.CurrentReviveCount = 0;
             this.IsPlaying          = true;
-            this.levelController.StartState();
         }
         public void Replaygame()
         {
             this.ResetNoteSpeed();
             this.IsPlaying = false;
-            this.levelController.RestartState();
         }
         public void WinGame()  { this.IsWin = true; }
         public void LoseGame() { this.IsWin = false; }
@@ -173,7 +168,6 @@ namespace BaseDuet.Scripts.Data.SessionData
             this.invicibleCancelToken?.Cancel();
             this.TimeScale = 1;
             this.IsPlaying = false;
-            this.levelController.EndState();
         }
 
         public void SaveResult(int score, float maxAccuracy, int maxCombo, bool fullCombo, bool fullPerfect)

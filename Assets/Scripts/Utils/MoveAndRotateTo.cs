@@ -6,32 +6,51 @@
 
     public class MoveAndRotateTo : MonoBehaviour
     {
-        public Transform target; // The object to move and rotate toward
-        public float     moveSpeed     = 5f; // Movement speed
-        public float     rotationSpeed = 5f; // Rotation speed
+        public RectTransform target; // UI element to follow
+        public float         moveSpeed      = 5f; // Movement speed
+        public float         rotationSpeed  = 5f; // Rotation speed
+        public float         followDistance = 1f; // Distance to maintain behind the target
+
+        private RectTransform rectTransform;
 
         private void Start()
         {
-
+            rectTransform = GetComponent<RectTransform>();
         }
+
         void Update()
         {
             if (target == null) return;
 
-            // Smooth movement toward the target
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
-
             // Calculate direction to the target
-            Vector3 direction = target.position - transform.position;
+            Vector2 direction = target.anchoredPosition - rectTransform.anchoredPosition;
 
-            // Calculate the angle for rotation
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                // Normalize direction
+                Vector2 normalizedDirection = direction.normalized;
 
-            // Smoothly rotate toward the target
-             Quaternion targetRotation = this.target.transform.rotation;
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            //this.transform.LookAt(this.target);
+                // Calculate the desired position behind the target
+                Vector2 desiredPosition = target.anchoredPosition - normalizedDirection * followDistance;
 
+                // Smooth movement toward the desired position
+                rectTransform.anchoredPosition = Vector2.Lerp(
+                    rectTransform.anchoredPosition,
+                    desiredPosition,
+                    moveSpeed * Time.deltaTime
+                );
+
+                // Calculate the angle for rotation
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+
+                // Smoothly rotate toward the target
+                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+                rectTransform.rotation = Quaternion.Lerp(
+                    rectTransform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
         }
     }
 }

@@ -4,12 +4,12 @@
     "MagicTiles.Services",
     "MagicTiles.Services.Implementations.DI",
     "UniTask",
+    "VContainer",
     "BaseDuet.Core",
     "GoogleSheet.Core",
     "CSSynth.Core",
     "GameCore.Extensions",
     "GameCore.Core",
-    "AYellowpaper.SerializedCollections",
-    "VContainer"
+    "AYellowpaper.SerializedCollections"
   ]
 }

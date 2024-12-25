@@ -69,7 +69,7 @@ namespace BaseDuet.Scripts.Data.SessionData
 
         public int Score { get => this.globalData.Score; set => this.globalData.Score = value; }
 
-        public float        NoteSpeed             { get => this.globalData.CurrentNoteSpeed;      private set => this.globalData.CurrentNoteSpeed = value; }
+        public float        NoteSpeed             { get => this.BaseNoteSpeed;      private set => this.globalData.CurrentNoteSpeed = value; }
         public ESongSegment CurrentSongSegment    { get => this.globalData.CurrentSongSegment;    set => this.globalData.CurrentSongSegment = value; }
         public string       CurrentSongDifficulty { get => this.globalData.CurrentSongDifficulty; set => this.globalData.CurrentSongDifficulty = value; }
 

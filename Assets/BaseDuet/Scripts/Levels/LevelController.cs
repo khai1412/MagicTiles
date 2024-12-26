@@ -115,8 +115,8 @@ namespace BaseDuet.Scripts.Levels
             // this.View.TutorialTimeline.gameObject.SetActive(this.globalDataController.IsGameplayTutorial);
             // this.View.ObstacleTimeline.gameObject.SetActive(false);
             if (this.View.SpeedUpVFX != null) this.View.SpeedUpVFX.SetActive(false);
-            if (this.View.SplitLine != null) this.View.SplitLine.SetActive(true);
-            this.View.DogLine.gameObject.SetActive(true);
+            if (this.View.SplitLine != null) this.View.SplitLine.SetActive(false);
+            this.View.DogLine.gameObject.SetActive(false);
             this.View.CrossLine.gameObject.SetActive(true);
             this.globalDataController.MaxHealth     = 0;
             this.globalDataController.CurrentHealth = this.globalDataController.MaxHealth;

@@ -32,7 +32,7 @@ namespace MagicTiles.Scripts.MIDI
         private static readonly string[] MajorKey = { "Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#" };
         private static readonly string[] MinorKey = { "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#" };
 
-        private static readonly float[]              PossiblePosition = { -2.4f, -1f, 1f, 2.4f };
+        private static readonly float[]              PossiblePosition = { -3f, -1f, 1f, 3f };
         private readonly        IAssetManager        assetManager;
         private readonly        GlobalDataController globalDataController;
 

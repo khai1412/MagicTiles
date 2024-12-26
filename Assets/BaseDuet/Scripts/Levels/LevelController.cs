@@ -52,7 +52,7 @@ namespace BaseDuet.Scripts.Levels
 
         private void Awake()
         {
-           
+
         }
 
         private void ClaimTutReward()
@@ -207,7 +207,6 @@ namespace BaseDuet.Scripts.Levels
 
         private void SpawnSingleNote(NoteModel noteModel)
         {
-            Debug.Log($"Spawn note");
             if (!this.globalDataController.IsPlaying) return;
             var noteController = this.objectPoolManager.Spawn(this.View.NoteControllerPrefab).GetComponent<NoteController>();
             noteController.transform.SetParent(this.View.NoteContainer, false);
@@ -242,7 +241,7 @@ namespace BaseDuet.Scripts.Levels
             if (this.globalDataController.IsGameplayTutorial) this.DoTutorialTimeline().Forget();
             this.SetActiveVFX(true);
             this.View.Tutorial.SetActive(false);
-            this.cacheDelay = this.globalDataController.MovingDurationToCharacter - this.globalDataController.FeelingLatency - this.globalDataController.Latency - (6 - this.globalDataController.NoteSpeed) * .05f;
+            this.cacheDelay = this.globalDataController.MovingDurationToCharacter - this.globalDataController.FeelingLatency - this.globalDataController.Latency;
             Debug.Log($"Cache lay: {this.globalDataController.MovingDurationToCharacter}");
             UniTask.Delay(TimeSpan.FromSeconds(this.cacheDelay)).ContinueWith(this.audioService.ResumePlayList).Forget();
             this.NewSpawnNote(0).Forget();

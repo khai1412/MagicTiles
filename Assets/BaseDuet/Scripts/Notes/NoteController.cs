@@ -245,14 +245,13 @@ namespace BaseDuet.Scripts.Notes
         {
             if (this.Model.IsHit) return;
             this.Model.IsHit = true;
-            Debug.Log($"Note id: {this.Model.Id}");
-            if (this.Model.IsObstacle)
-            {
-                this.moveTween.Kill();
-                this.RecycleNote();
-            }
+            // Debug.Log($"Note id: {this.Model.Id}");
+            // if (this.Model.IsObstacle)
+            // {
+            // }
 
-            this.PlayNoteEffect();
+            // this.PlayNoteEffect();
+            this.moveTween.Kill();
             this.RecycleNote();
         }
 

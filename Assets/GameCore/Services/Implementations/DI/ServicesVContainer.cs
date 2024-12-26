@@ -8,6 +8,7 @@
     using GameCore.Services.Implementations.ScreenManager;
     using VContainer;
     using GameCore.Extensions;
+    using VContainer.Unity;
 
     public static class ServicesVContainer
     {

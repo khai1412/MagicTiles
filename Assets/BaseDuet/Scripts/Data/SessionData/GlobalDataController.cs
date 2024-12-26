@@ -41,7 +41,7 @@ namespace BaseDuet.Scripts.Data.SessionData
                 Time.timeScale = 1;
                 try
                 {
-                    this.audioService.SetPlayListPitch(value);
+                    this.audioService.SetPlayListPitch(1);
                 }
                 catch (Exception e)
                 {

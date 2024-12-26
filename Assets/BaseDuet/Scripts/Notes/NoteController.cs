@@ -250,7 +250,7 @@ namespace BaseDuet.Scripts.Notes
             // {
             // }
 
-            // this.PlayNoteEffect();
+            this.PlayNoteEffect();
             this.moveTween.Kill();
             this.RecycleNote();
         }
@@ -260,24 +260,28 @@ namespace BaseDuet.Scripts.Notes
             if (this.Model.ELongNote == ELongNote.Head || this.Model.ELongNote == ELongNote.Body)
             {
                 // this.vibrationService.PlayPresetType(VibrationPresetType.LightImpact);
-                if (this.globalDataController.IsPlaying && this.Model.ELongNote == ELongNote.Head) this.audioService.PlaySound(this.staticSFXBlueprint.FoodLong, isLoop: true);
+                // if (this.globalDataController.IsPlaying && this.Model.ELongNote == ELongNote.Head) this.audioService.PlaySound(this.staticSFXBlueprint.FoodLong, isLoop: true);
+                if (this.globalDataController.IsPlaying && this.Model.ELongNote == ELongNote.Head) this.audioService.PlaySound(this.staticSFXBlueprint.Food, isLoop: false);
             }
             else if (this.Model.IsMoodChange)
             {
                 // this.vibrationService.PlayPresetType(VibrationPresetType.MediumImpact);
-                this.audioService.PlaySound(this.staticSFXBlueprint.FoodStar);
+                // this.audioService.PlaySound(this.staticSFXBlueprint.FoodStar);
+                this.audioService.PlaySound(this.staticSFXBlueprint.Food);
             }
             else if (this.Model.IsObstacle)
             {
                 // this.vibrationService.PlayPresetType(VibrationPresetType.Failure);
-                this.audioService.PlaySound(this.staticSFXBlueprint.Obstacle);
+                // this.audioService.PlaySound(this.staticSFXBlueprint.Obstacle);
+                this.audioService.PlaySound(this.staticSFXBlueprint.Food);
             }
             else if (this.Model.ELongNote == ELongNote.Tail)
                 this.audioService.StopAllSound();
             else if (this.Model.IsStrong)
             {
                 // this.vibrationService.PlayPresetType(VibrationPresetType.HeavyImpact);
-                this.audioService.PlaySound(this.staticSFXBlueprint.FoodBig);
+                // this.audioService.PlaySound(this.staticSFXBlueprint.FoodBig);
+                this.audioService.PlaySound(this.staticSFXBlueprint.Food);
             }
             else
             {

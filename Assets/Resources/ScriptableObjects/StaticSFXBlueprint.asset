@@ -24,7 +24,7 @@ MonoBehaviour:
   SlideShop: SLIDE_SHOP_ITEM
   SlideBackShop: SLIDE_BACK_SHOP_ITEM
   SlideStuckShop: SLIDE_STUCK_SHOP_ITEM
-  Food: FOOD
+  Food: SFXs/FOOD
   FoodBig: FOODBIG
   FoodLong: FOODLONG
   FoodStar: FOODSTAR

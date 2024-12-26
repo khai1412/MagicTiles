@@ -176,7 +176,7 @@ namespace GameCore.Services.Implementations.ObjectPool
             }
             else
             {
-                throw new Exception($"Can't recycle object {obj.name}, maybe you already recycled it!");
+                //throw new Exception($"Can't recycle object {obj.name}, maybe you already recycled it!");
             }
         }
 

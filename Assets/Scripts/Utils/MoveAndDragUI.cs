@@ -1,5 +1,6 @@
 ﻿namespace Utils
 {
+    using System;
     using UnityEngine;
 
     public class MoveAndDragUI : MonoBehaviour
@@ -12,6 +13,11 @@
         private Vector2       targetPosition;
         private float         targetRotation;
         private bool          isDragging = false;
+        public  float         maxX;
+        public  float         minX;
+        public  float         maxY;
+        public  float         minY;
+        
 
         void Start()
         {
@@ -57,8 +63,8 @@
             }
 
             // Smoothly move toward the target position
+            this.targetPosition            = new Vector2(Math.Clamp(this.targetPosition.x, this.minX, this.maxX), Math.Clamp(this.targetPosition.y,this.minY, this.maxY));
             rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, targetPosition, moveSpeed * Time.deltaTime);
-
             // Smoothly rotate toward the target rotation
             Quaternion currentRotation = rectTransform.rotation;
             Quaternion desiredRotation = Quaternion.Euler(0, 0, targetRotation);

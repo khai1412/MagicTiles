@@ -319,15 +319,16 @@ namespace BaseDuet.Scripts.Notes
 
         private void RecycleNote()
         {
-            try
-            {
-                this.View.Recycle();
-                // this.reviveToken?.Dispose();
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
+            this.View.Recycle();
+            // try
+            // {
+            //     this.View.Recycle();
+            //     // this.reviveToken?.Dispose();
+            // }
+            // catch (Exception e)
+            // {
+            //     Debug.Log(e.Message);
+            // }
         }
 
         private void SetupView()

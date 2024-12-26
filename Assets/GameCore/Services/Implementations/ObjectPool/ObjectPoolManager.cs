@@ -10,21 +10,7 @@ namespace GameCore.Services.Implementations.ObjectPool
 
     public sealed class ObjectPoolManager
     {
-        public static ObjectPoolManager Instance
-        {
-            get
-            {
-                if (Instance == null)
-                {
-                    Instance = new ObjectPoolManager();
-                }
-
-                return Instance;
-            }
-            set => Instance = value;
-        }
-
-
+        public static    ObjectPoolManager                  Instance { get; private set; }
         private readonly List<GameObject>                   tempList               = new List<GameObject>();
         private readonly Dictionary<GameObject, ObjectPool> prefabToObjectPool     = new Dictionary<GameObject, ObjectPool>();
         private readonly Dictionary<GameObject, ObjectPool> spawnedObjToObjectPool = new Dictionary<GameObject, ObjectPool>();
@@ -34,12 +20,11 @@ namespace GameCore.Services.Implementations.ObjectPool
 
         private GameObject defaultRoot;
 
+        public ObjectPoolManager() { Instance = this; }
+
         #region Pool
 
-        public ObjectPool CreatePool<T>(T prefab, int initialPoolSize, GameObject root) where T : Component
-        {
-            return this.CreatePool(prefab.gameObject, initialPoolSize, root);
-        }
+        public ObjectPool CreatePool<T>(T prefab, int initialPoolSize, GameObject root) where T : Component { return this.CreatePool(prefab.gameObject, initialPoolSize, root); }
 
         public ObjectPool CreatePool(GameObject prefab, int initialPoolSize, GameObject root)
         {
@@ -222,10 +207,7 @@ namespace GameCore.Services.Implementations.ObjectPool
             this.tempList.Clear();
         }
 
-        public void RecycleAll<T>(T prefab) where T : Component
-        {
-            this.RecycleAll(prefab.gameObject);
-        }
+        public void RecycleAll<T>(T prefab) where T : Component { this.RecycleAll(prefab.gameObject); }
 
         #endregion
 
@@ -239,10 +221,7 @@ namespace GameCore.Services.Implementations.ObjectPool
             }
         }
 
-        public void CleanUpPooled<T>(T prefab) where T : Component
-        {
-            this.CleanUpPooled(prefab.gameObject);
-        }
+        public void CleanUpPooled<T>(T prefab) where T : Component { this.CleanUpPooled(prefab.gameObject); }
 
         public void CleanUpAll(GameObject prefab)
         {
@@ -257,10 +236,7 @@ namespace GameCore.Services.Implementations.ObjectPool
             this.prefabToObjectPool.Remove(prefab);
         }
 
-        public void CleanUpAll<T>(T prefab) where T : Component
-        {
-            this.CleanUpAll(prefab.gameObject);
-        }
+        public void CleanUpAll<T>(T prefab) where T : Component { this.CleanUpAll(prefab.gameObject); }
 
         public void DestroyPool(GameObject prefab)
         {

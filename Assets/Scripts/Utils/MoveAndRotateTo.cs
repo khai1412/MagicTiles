@@ -29,10 +29,10 @@
             Vector2 desiredPosition = target.anchoredPosition - normalizedDirection * followDistance;
 
             // Smooth movement toward the desired position
-            rectTransform.anchoredPosition = Vector2.Lerp(
+            rectTransform.anchoredPosition = Vector2.MoveTowards(
                 rectTransform.anchoredPosition,
                 desiredPosition,
-                moveSpeed * Time.deltaTime
+                moveSpeed* 100 * Time.deltaTime
             );
 
             // Calculate the angle for rotation

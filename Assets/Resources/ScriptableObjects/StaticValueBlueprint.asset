@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a3aa7f806f4a108cb295148da9670e, type: 3}
   m_Name: StaticValueBlueprint
   m_EditorClassIdentifier: 
-  BaseNoteSpeed: 1000
+  BaseNoteSpeed: 500
   LowestNotePosition: -2000
   HighestNotePosition: 10
   HighestTimeScale: 3

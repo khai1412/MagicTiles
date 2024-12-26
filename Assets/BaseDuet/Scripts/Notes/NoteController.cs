@@ -249,10 +249,11 @@ namespace BaseDuet.Scripts.Notes
             if (this.Model.IsObstacle)
             {
                 this.moveTween.Kill();
-                UniTask.Delay(0).ContinueWith(this.RecycleNote).Forget();
+                this.RecycleNote();
             }
 
             this.PlayNoteEffect();
+            this.RecycleNote();
         }
 
         private void PlayNoteEffect()

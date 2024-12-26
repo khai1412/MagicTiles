@@ -18,12 +18,12 @@ MonoBehaviour:
       Value:
         SongId: 1
         Story: 1
-        SongName: Interstella
+        SongName: LostinAgadir_midi
         Artist: Chillies
         Icon: Icon
         HasObstacle: 0
         ListThemes:
         - BlueTheme
         - GreenTheme
-        SongAddress: Songs/Audio/Interstellar
-        MidiAddress: Songs/Midi/Interstellar
+        SongAddress: Songs/Audio/LostinAgadir_mp3
+        MidiAddress: Songs/Midi/LostinAgadir_midi

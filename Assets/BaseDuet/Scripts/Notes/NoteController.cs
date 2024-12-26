@@ -314,22 +314,21 @@ namespace BaseDuet.Scripts.Notes
         {
             this.moveTween.Kill();
             this.Model.IsHit = true;
-
-            UniTask.Delay(delay).ContinueWith(this.RecycleNote).Forget();
+            this.RecycleNote();
+            //UniTask.Delay(delay).ContinueWith(this.RecycleNote).Forget();
         }
 
         private void RecycleNote()
         {
-            this.View.Recycle();
-            // try
-            // {
-            //     this.View.Recycle();
-            //     // this.reviveToken?.Dispose();
-            // }
-            // catch (Exception e)
-            // {
-            //     Debug.Log(e.Message);
-            // }
+            try
+            {
+                this.View.Recycle();
+                this.reviveToken?.Dispose();
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
         }
 
         private void SetupView()
